@@ -7,9 +7,9 @@ coroutines = "1.11.0"
 datetime = "0.8.0"
 sqldelight = "2.4.1"
 mockito-kotlin = "6.4.0"
-android-compileSdk = "36"
+android-compileSdk = "37"
 android-minSdk = "28"
-android-targetSdk = "36"
+android-targetSdk = "37"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
