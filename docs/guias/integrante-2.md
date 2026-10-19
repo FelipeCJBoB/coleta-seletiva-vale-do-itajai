@@ -62,15 +62,15 @@ Escolher local, tela Início e identidade visual (nome, ícone, cores), calendá
 
 ## O ciclo de cada cartão (vale para todos os cartões de código)
 
-1. **Pegar o cartão.** No Trello, mova o cartão para 'Em andamento' (ou marque o primeiro item do checklist) e avise no grupo se for começar algo que outro espera.
+1. **Pegar o cartão.** No Trello, abra o seu cartão (coluna do seu Integrante, Etapa 2), leia o checklist e marque os itens conforme avança. Avise no grupo quando começar.
 2. **Atualizar e criar a branch.** `git checkout main` · `git pull` · `git checkout -b feat/pbXX-resumo` (ex.: feat/pb08-calendario).
 3. **Ler os arquivos-esqueleto.** No VS Code/Android Studio abra a pasta do seu cartão. Cada arquivo já existe, só com comentários: eles dizem o que escrever, passo a passo. Leia todos antes de começar.
 4. **Trabalhar na ordem da lista.** A ordem dos arquivos no cartão é a ordem certa: modelos → testes da regra → regra → interface do repositório → Fake → teste do ViewModel → ViewModel → tela → teste de interface → SQL (só depois do PB06b) → repositório SQL → dados → ligar no container.
 5. **Ciclo TDD em cada regra (vermelho → verde → refatorar).** (1) Escreva o teste do arquivo de teste e rode: tem que FALHAR. `git commit -m "test: ..."`. (2) Escreva o código mínimo para passar. `git commit -m "feat: ..."`. (3) Melhore o código sem quebrar o teste. `git commit -m "refactor: ..."`. Dê push depois de cada commit: o CI mostra vermelho e depois verde (é a nossa evidência).
 6. **Rodar tudo local.** `.\gradlew.bat testDebugUnitTest` (PowerShell) ou `./gradlew testDebugUnitTest`. Para só um teste: `.\gradlew.bat testDebugUnitTest --tests "*NomeDoTeste"`.
-7. **Abrir o Pull Request.** `git push -u origin feat/pbXX-resumo` e abra o PR no GitHub. Preencha o modelo: o que mudou, qual cartão, como conferir, checklist.
+7. **Abrir o Pull Request.** `git push -u origin feat/pbXX-resumo` e abra o PR no GitHub. Preencha o modelo: o que mudou, qual cartão, como conferir, checklist. Mova o cartão para a coluna 'Revisão' do Trello.
 8. **Revisão e merge.** O Integrante 1 revisa (até 24 h). Corrija o que pedir. Com o CI verde e a aprovação, ele faz o merge.
-9. **Fechar o cartão.** Marque o checklist do Trello, mova para 'Concluído' e escreva 1 linha no grupo: 'PBxx mergeado'.
+9. **Fechar o cartão.** Depois do merge, mova o cartão para 'Concluído' no Trello e escreva 1 linha no grupo: 'PBxx mergeado'.
 
 ## Seus cartões
 
@@ -79,7 +79,7 @@ Escolher local, tela Início e identidade visual (nome, ícone, cores), calendá
 
 **História:** Como morador, quero escolher meu município e setor de coleta entre os cadastrados, para o app mostrar as informações do meu local.
 
-**Objetivo:** O usuário escolhe um município, depois um setor (bairro) daquele município, e o app guarda a escolha no aparelho. Os municípios e setores vêm do banco (dados de demonstração), nunca do código da tela.
+**Objetivo:** O usuário escolhe um município, depois um setor (bairro) daquele município, e o app guarda a escolha no aparelho. Os municípios e setores vêm do banco (dados de demonstração), nunca do código da tela. PRIMEIRO PR pequeno (até qua 28/10): Local.kt, LocalRepositorio.kt e LocalRepositorioFake.kt, porque os Integrantes 3 e o seu próprio Início/Calendário dependem deles nos testes.
 
 **Regras (docs/ESCOPO.md):**
 - RN06: só existem municípios e setores cadastrados.
