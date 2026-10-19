@@ -2,6 +2,8 @@ package br.edu.univali.coletaseletiva.di
 
 import androidx.compose.runtime.staticCompositionLocalOf
 import br.edu.univali.coletaseletiva.dados.DriverFactory
+import br.edu.univali.coletaseletiva.util.Relogio
+import br.edu.univali.coletaseletiva.util.RelogioDoSistema
 
 /**
  * Onde as peças do app são criadas e entregues às telas (injeção de dependência manual).
@@ -9,7 +11,28 @@ import br.edu.univali.coletaseletiva.dados.DriverFactory
  * REGRA: cada Integrante só escreve dentro do SEU bloco (entre os comentários "início" e "fim").
  * Assim, dois PRs nunca editam as mesmas linhas e não dá conflito de merge.
  */
-class AppContainer(val driverFactory: DriverFactory) {
+class AppContainer(
+    val driverFactory: DriverFactory,
+    val relogio: Relogio = RelogioDoSistema,
+) {
+
+    /**
+     * Roda uma vez quando o app abre, ANTES da primeira tela (veja App.kt).
+     * Cada Integrante chama aqui, no seu bloco, o `semearSeVazio()` do seu repositório
+     * (insere os dados de demonstração só se o banco estiver vazio).
+     */
+    suspend fun iniciar() {
+        // ===== INTEGRANTE 2 (PB07, PB08): dados de demonstração =====
+        // início
+
+        // fim
+
+
+        // ===== INTEGRANTE 3 (PB09): dados de demonstração =====
+        // início
+
+        // fim
+    }
 
     // ===== INTEGRANTE 5 (PB06b): banco de dados =====
     // início

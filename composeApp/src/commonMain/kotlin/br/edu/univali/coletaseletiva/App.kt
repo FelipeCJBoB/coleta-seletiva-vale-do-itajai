@@ -5,7 +5,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import br.edu.univali.coletaseletiva.di.AppContainer
 import br.edu.univali.coletaseletiva.di.LocalContainer
@@ -16,10 +20,15 @@ import br.edu.univali.coletaseletiva.navegacao.Navegador
 @Composable
 fun App(container: AppContainer) {
     val navegador = remember { Navegador() }
+    var pronto by remember { mutableStateOf(false) }
+    LaunchedEffect(Unit) {
+        container.iniciar()
+        pronto = true
+    }
     CompositionLocalProvider(LocalContainer provides container) {
         MaterialTheme {
             Surface(modifier = Modifier.fillMaxSize()) {
-                AppNavegacao(navegador)
+                if (pronto) AppNavegacao(navegador)
             }
         }
     }
