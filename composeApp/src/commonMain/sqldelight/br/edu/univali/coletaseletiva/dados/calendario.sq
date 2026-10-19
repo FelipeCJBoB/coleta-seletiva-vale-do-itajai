@@ -1,0 +1,16 @@
+-- ======================================================================
+-- ARQUIVO-ESQUELETO · Integrante 2 · Cartão PB08 · arquivo 12 de 16
+-- Dias de coleta por setor.
+--
+-- PASSO A PASSO (troque [ ] por [x] quando terminar; no fim, apague este bloco
+-- e deixe só comentários úteis):
+--   [ ] 1. Tabela `coleta_dia`: setor_id (inteiro), tipo (texto: 'SELETIVA' ou 'COMUM'),
+--          dia_semana (inteiro 1 a 7, com 1 = segunda). Chave primária composta pelas 3
+--          colunas.
+--   [ ] 2. Consultas: listarColetasDoSetor(setor_id), inserirColeta(setor_id, tipo,
+--          dia_semana), contarColetas.
+--   [ ] 3. Receita R6. Faça só depois do PB07 (setores existem).
+--
+-- Requisitos: RF03, RN01, RN02, RN03, CU02  ·  Receitas: docs/RECEITAS.md  ·  Bíblia:
+--        docs/guias/integrante-2.md
+-- ======================================================================

@@ -70,24 +70,26 @@ Todos somos Time de Desenvolvimento quando o app começar: cada um assume uma fu
 
 ## 4. Etapa 2 / app (Release 2: sprints de 2 semanas)
 
-| Sprint | Datas | Objetivo |
+Tudo da Etapa 2 (app final, telas, dados, arquivos e testes) está em [ETAPA2.md](ETAPA2.md). A bíblia de cada Integrante, com o passo a passo ponta a ponta, está em [guias/](guias/).
+
+| Sprint | Datas (provisórias) | Objetivo |
 |---|---|---|
-| 2 | 26/10 a 08/11 | Base da arquitetura, dados locais, **calendário de coleta** com testes |
-| 3 | 09/11 a 22/11 | **Pontos de descarte** com filtro por material, **pontuação simples e histórico**, testes |
-| 4 | 23/11 a 06/12 | **Guia de separação**, dicas, lembrete, validação, relatório e vídeo da Etapa 2 |
+| 1 (fecha) | até 25/10 | PB05: todos com o ambiente funcionando e o primeiro PR ([CHECKLIST-AMBIENTE.md](CHECKLIST-AMBIENTE.md)) |
+| 2 | 26/10 a 08/11 | 1º ciclo TDD de cada funcionalidade: banco (PB06b), local (PB07), início (PB07b), pontos (PB09), guia (PB11), regras de pontuação |
+| 3 | 09/11 a 22/11 | Funcionalidades completas com SQL e dados, testes de interface, calendário (PB08), detalhe do ponto (PB10), dicas (PB17), pontuação (PB16), roteiro de validação |
+| 4 | 23/11 a 06/12 | Integração, validação pelo grupo, relatório 5.1.1 a 5.1.4, vídeo, PDF e entrega; PB12 só se sobrar tempo |
 
-Se o professor marcar a Etapa 2 para antes disso, as sprints 3 e 4 são comprimidas e o lembrete (RF02) sai primeiro.
+Papéis e donos na Etapa 2:
 
-Donos das funcionalidades (sempre em dupla com o Integrante 5, porque ninguém no grupo tem experiência mobile):
-
-| Funcionalidade | Dono | Apoio |
+| Integrante | Papel | Cartões |
 |---|---|---|
-| Base, dados locais, CI | 5 | todos |
-| Calendário e município/setor | 2 | 5 |
-| Pontos de descarte e filtro | 4 | 5 |
-| Pontuação simples e histórico | 1 | 5 |
-| Guia de separação e dicas de reciclagem | 3 | 5 |
-| Testes de interface e evidências para o relatório | 1 | 5 |
+| 1 | Scrum Master e Validação (não programa funcionalidades) | Trello, eventos, revisão e merge de todos os PRs, PB13, PB14, seção 6, iOS/CI, contato com o professor |
+| 2 | Dev: local, calendário e a cara do app | PB07, PB07b, PB08, PB12 (opcional) |
+| 3 | Dev: pontos de descarte e dicas | PB09 (inclui o enum Material), PB10, PB17 |
+| 4 | Dev: guia e vídeo | PB11, vídeo 7.2 |
+| 5 | Dev: banco, pontuação e documentação | PB06b, PB16, relatório 5.1.1 a 5.1.4, PDF |
+
+Decisões novas (D-07 a D-11) em [ETAPA2.md](ETAPA2.md). A data oficial da Etapa 2 ainda precisa ser confirmada com o professor (Integrante 1).
 
 ## 5. Como trabalhamos
 

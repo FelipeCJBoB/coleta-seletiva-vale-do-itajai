@@ -11,11 +11,11 @@ Somos 5 e ninguém tinha rotina de Git em equipe, então o fluxo é simples de p
 
 ## Nome da branch
 
-`tipo/area-resumo`, por exemplo:
+`tipo/pbXX-resumo` (o número do cartão no Trello), por exemplo:
 
 - `docs/escopo-ajuste-rn`
-- `feat/calendario-tela`
-- `test/calendario-regras`
+- `feat/pb08-calendario`
+- `test/pb08-proxima-coleta`
 - `chore/ambiente-gradle`
 
 ## Mensagens de commit
@@ -30,6 +30,13 @@ fix: corrige filtro de pontos por material
 ```
 
 No TDD, o commit `test:` (teste falhando) vem antes do `feat:` (código que faz passar).
+
+## Etapa 2: TDD e revisão
+
+- Cada cartão = 1 branch = 1 Pull Request. Siga o ciclo completo em [docs/guias](docs/guias/) (bíblia do seu Integrante) e as receitas em [docs/RECEITAS.md](docs/RECEITAS.md).
+- Commits na ordem: `test:` (falha) → `feat:` (passa) → `refactor:`. Esse histórico é a evidência do TDD; por isso o merge é **merge commit** (nada de squash).
+- O Integrante 1 revisa e faz o merge de todos os PRs; o CI precisa estar verde.
+- Cada um edita só a própria pasta em `funcionalidades/` e o próprio bloco em `AppContainer.kt` e `AppNavegacao.kt`.
 
 ## Passo a passo
 

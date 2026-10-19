@@ -1,0 +1,21 @@
+-- ======================================================================
+-- ARQUIVO-ESQUELETO · Integrante 2 · Cartão PB07 · arquivo 8 de 12
+-- Tabelas de municípios, setores e escolha do usuário.
+--
+-- PASSO A PASSO (troque [ ] por [x] quando terminar; no fim, apague este bloco
+-- e deixe só comentários úteis):
+--   [ ] 1. Tabela `municipio`: id (inteiro, chave primária), nome (texto), uf (texto).
+--   [ ] 2. Tabela `setor`: id (inteiro, chave primária), municipio_id (inteiro, referencia
+--          municipio), nome (texto).
+--   [ ] 3. Tabela `escolha_local`: guarda UMA linha só (id fixo 1) com setor_id. Dica: use
+--          'INSERT OR REPLACE' para trocar a escolha.
+--   [ ] 4. Consultas (com nome): listarMunicipios (ordem alfabética),
+--          listarSetoresDoMunicipio(municipio_id), buscarSetorEscolhido (junta
+--          escolha_local + setor + municipio), salvarEscolha, inserirMunicipio,
+--          inserirSetor, contarMunicipios.
+--   [ ] 5. Receita: R6. Só escreva este arquivo DEPOIS do PB06b mergeado (precisa do
+--          Banco).
+--
+-- Requisitos: RF01, RN06, RN07, RNF05, CU01  ·  Receitas: docs/RECEITAS.md  ·  Bíblia:
+--        docs/guias/integrante-2.md
+-- ======================================================================

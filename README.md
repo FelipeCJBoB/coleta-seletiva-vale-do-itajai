@@ -37,3 +37,10 @@ Kotlin Multiplatform + Compose Multiplatform, com lógica compartilhada entre An
 ## Equipe
 
 Cinco integrantes (Integrante 1 a 5). Os papéis estão em [docs/PLANO.md](docs/PLANO.md).
+
+## Etapa 2 (desenvolvimento do app)
+
+- App final definido: [docs/ETAPA2.md](docs/ETAPA2.md)
+- Ambiente: [docs/AMBIENTE.md](docs/AMBIENTE.md) · Receitas de código: [docs/RECEITAS.md](docs/RECEITAS.md)
+- Bíblia de cada Integrante: [docs/guias/](docs/guias/)
+- Checklist de ambiente: [docs/CHECKLIST-AMBIENTE.md](docs/CHECKLIST-AMBIENTE.md)
