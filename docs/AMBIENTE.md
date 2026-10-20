@@ -49,3 +49,5 @@
 - 'SDK location not found': abra o projeto pelo Android Studio uma vez (ele cria o local.properties).
 - Gradle demorando na primeira vez: normal (baixa dependências).
 - iOS: ninguém tem Mac; os testes de iOS rodam no CI.
+- Teste falhando que você acabou de escrever é o esperado no TDD (vermelho). Só é problema se continuar vermelho depois do código.
+- Conflito de merge: quase sempre é por mexer fora do seu bloco. Avise o Integrante 1 antes de resolver.

@@ -1,6 +1,6 @@
 # Integrante 5 · Desenvolvimento: banco, pontuação e documentação
 
-> Sua bíblia da Etapa 2. Tudo que você precisa está aqui (e igual no Trello). Primeiro leia o Plano geral no HTML.
+> Sua bíblia da Etapa 2. HTML, Trello e Markdown têm o MESMO conteúdo (todos saem da mesma fonte). Escolha UM para seguir do começo ao fim. Regra prática: leia e siga o passo a passo no formato que preferir, e marque o andamento do cartão no Trello (mover para 'Revisão' e 'Concluído'), porque é o Trello que o professor vê como evidência do Scrum.
 
 ## Seu papel em 1 minuto
 
