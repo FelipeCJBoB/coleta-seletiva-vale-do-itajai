@@ -10,5 +10,5 @@ Cada Integrante troca `[ ]` por `[x]` **só na sua linha**, num Pull Request (es
 
 - [ ] Integrante 4: Git, JDK 17, Android Studio instalados; `testDebugUnitTest` com BUILD SUCCESSFUL; app aberto no emulador/celular; PR feito.
 
-- [ ] Integrante 5: Git, JDK 17, Android Studio instalados; `testDebugUnitTest` com BUILD SUCCESSFUL; app aberto no emulador/celular; PR feito.
+- [x] Integrante 5: Git, JDK 17, Android Studio instalados; `testDebugUnitTest` com BUILD SUCCESSFUL; app aberto no emulador/celular; PR feito.
 
