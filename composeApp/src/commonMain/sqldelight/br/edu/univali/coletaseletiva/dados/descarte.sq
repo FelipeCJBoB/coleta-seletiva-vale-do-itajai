@@ -1,18 +1,12 @@
--- ======================================================================
--- ARQUIVO-ESQUELETO · Integrante 5 · Cartão PB06b · arquivo 1 de 4
--- Primeira tabela do app: o registro de descartes (usada no PB16).
---
--- PASSO A PASSO (troque [ ] por [x] quando terminar; no fim, apague este bloco
--- e deixe só comentários úteis):
---   [ ] 1. Descreva a tabela `descarte` com 4 colunas: id (número inteiro, chave primária,
---          automático), material (texto, obrigatório; guarda o nome do Material), pontos
---          (número inteiro, obrigatório) e data (texto obrigatório no formato AAAA-MM-DD).
---   [ ] 2. Escreva UMA consulta com nome `contarDescartes` que devolve a quantidade de
---          linhas da tabela (é o que o teste usa agora).
---   [ ] 3. As outras consultas (inserir, listar, somar, contar por data) ficam para o
---          cartão PB16 — não escreva agora.
---   [ ] 4. Receita: R6. Tipo de arquivo: .sq (SQL do SQLDelight).
---
--- Requisitos: RNF05 (parte do PB06)  ·  Receitas: docs/RECEITAS.md  ·  Bíblia:
---        docs/guias/integrante-5.md
--- ======================================================================
+-- Registro de descartes do usuário (usada no PB06b e PB16).
+-- Regras: RN07 (dados locais), RN08 (pontos por material), RN09 (limite diário).
+
+CREATE TABLE descarte (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    material TEXT NOT NULL,
+    pontos INTEGER NOT NULL,
+    data TEXT NOT NULL
+);
+
+contarDescartes:
+SELECT COUNT(*) FROM descarte;
