@@ -1,19 +1,24 @@
 package br.edu.univali.coletaseletiva.funcionalidades.local
 
-// ======================================================================
-// ARQUIVO-ESQUELETO · Integrante 2 · Cartão PB07 · arquivo 11 de 12
-// Dados de demonstração (fictícios) de municípios e setores.
-//
-// PASSO A PASSO (troque [ ] por [x] quando terminar; no fim, apague este bloco
-// e deixe só comentários úteis):
-//   [ ] 1. Ids FIXOS (os outros cartões dependem deles): Municípios: 1 = Itajaí/SC, 2 =
-//          Camboriú/SC. Setores: 1 Centro (Itajaí), 2 São Vicente (Itajaí), 3 Fazenda
-//          (Itajaí), 4 Centro (Camboriú), 5 Monte Alegre (Camboriú), 6 Tabuleiro
-//          (Camboriú).
-//   [ ] 2. Crie as listas e constantes com esses ids. Escreva um comentário curto: 'dados
-//          de demonstração'.
-//   [ ] 3. NÃO invente horários. Só nomes e ids (os dias de coleta ficam no PB08).
-//
-// Requisitos: RF01, RN06, RN07, RNF05, CU01  ·  Receitas: docs/RECEITAS.md  ·  Bíblia:
-//        docs/guias/integrante-2.md
-// ======================================================================
+/**
+ * Dados de DEMONSTRAÇÃO (fictícios) de municípios e setores do Vale do Itajaí.
+ * Os ids são fixos: os cartões de calendário (PB08) e pontos de descarte (PB09) usam estes mesmos números.
+ */
+object DadosLocalDemo {
+    const val ID_ITAJAI = 1L
+    const val ID_CAMBORIU = 2L
+
+    val municipios = listOf(
+        Municipio(ID_ITAJAI, "Itajaí", "SC"),
+        Municipio(ID_CAMBORIU, "Camboriú", "SC"),
+    )
+
+    val setores = listOf(
+        Setor(1, ID_ITAJAI, "Centro"),
+        Setor(2, ID_ITAJAI, "São Vicente"),
+        Setor(3, ID_ITAJAI, "Fazenda"),
+        Setor(4, ID_CAMBORIU, "Centro"),
+        Setor(5, ID_CAMBORIU, "Monte Alegre"),
+        Setor(6, ID_CAMBORIU, "Tabuleiro"),
+    )
+}

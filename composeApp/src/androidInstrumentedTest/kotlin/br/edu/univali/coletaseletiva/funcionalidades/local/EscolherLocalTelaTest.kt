@@ -1,18 +1,87 @@
 package br.edu.univali.coletaseletiva.funcionalidades.local
 
-// ======================================================================
-// ARQUIVO-ESQUELETO · Integrante 2 · Cartão PB07 · arquivo 7 de 12
-// Teste de interface (Compose/Espresso) da tela.
-//
-// PASSO A PASSO (troque [ ] por [x] quando terminar; no fim, apague este bloco
-// e deixe só comentários úteis):
-//   [ ] 1. Escreva 1 teste: renderiza EscolherLocalTela com estado de exemplo e confere
-//          que o texto 'Escolha seu local' e o nome de um município aparecem (receita R5).
-//   [ ] 2. Roda no CI (job 'Testes de interface') ou no emulador do Android Studio.
-//
-// TESTES A ESCREVER (um @Test por linha; escreva ANTES do código = TDD):
-//   [ ] mostra_titulo_e_municipios
-//
-// Requisitos: RF01, RN06, RN07, RNF05, CU01  ·  Receitas: docs/RECEITAS.md  ·  Bíblia:
-//        docs/guias/integrante-2.md
-// ======================================================================
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsEnabled
+import androidx.compose.ui.test.assertIsNotEnabled
+import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithText
+import org.junit.Rule
+import org.junit.Test
+
+class EscolherLocalTelaTest {
+    @get:Rule
+    val rule = createComposeRule()
+
+    private val itajai = Municipio(1, "Itajaí", "SC")
+
+    @Test
+    fun mostra_titulo_e_municipios() {
+        rule.setContent {
+            EscolherLocalTela(
+                estado = EscolherLocalEstado(carregando = false, municipios = listOf(itajai)),
+                onEscolherMunicipio = {},
+                onEscolherSetor = {},
+                onConfirmar = {},
+                onVoltar = {},
+            )
+        }
+        rule.onNodeWithText("Escolha seu local").assertIsDisplayed()
+        rule.onNodeWithText("Itajaí · SC").assertIsDisplayed()
+        rule.onNodeWithText("Sua escolha fica só no aparelho.").assertIsDisplayed()
+    }
+
+    @Test
+    fun sem_municipios_mostra_aviso() {
+        rule.setContent {
+            EscolherLocalTela(
+                estado = EscolherLocalEstado(carregando = false, semMunicipios = true),
+                onEscolherMunicipio = {},
+                onEscolherSetor = {},
+                onConfirmar = {},
+                onVoltar = {},
+            )
+        }
+        rule.onNodeWithText("Nenhum município cadastrado").assertIsDisplayed()
+    }
+
+    @Test
+    fun confirmar_so_fica_ativo_com_setor_escolhido() {
+        val setor = Setor(1, 1, "Centro")
+        rule.setContent {
+            EscolherLocalTela(
+                estado = EscolherLocalEstado(
+                    carregando = false,
+                    municipios = listOf(itajai),
+                    municipioSelecionado = itajai,
+                    setores = listOf(setor),
+                ),
+                onEscolherMunicipio = {},
+                onEscolherSetor = {},
+                onConfirmar = {},
+                onVoltar = {},
+            )
+        }
+        rule.onNodeWithText("Confirmar").assertIsNotEnabled()
+    }
+
+    @Test
+    fun confirmar_ativo_quando_o_setor_foi_escolhido() {
+        val setor = Setor(1, 1, "Centro")
+        rule.setContent {
+            EscolherLocalTela(
+                estado = EscolherLocalEstado(
+                    carregando = false,
+                    municipios = listOf(itajai),
+                    municipioSelecionado = itajai,
+                    setores = listOf(setor),
+                    setorSelecionado = setor,
+                ),
+                onEscolherMunicipio = {},
+                onEscolherSetor = {},
+                onConfirmar = {},
+                onVoltar = {},
+            )
+        }
+        rule.onNodeWithText("Confirmar").assertIsEnabled()
+    }
+}

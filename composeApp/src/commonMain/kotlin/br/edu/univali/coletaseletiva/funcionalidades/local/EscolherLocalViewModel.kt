@@ -1,19 +1,55 @@
 package br.edu.univali.coletaseletiva.funcionalidades.local
 
-// ======================================================================
-// ARQUIVO-ESQUELETO · Integrante 2 · Cartão PB07 · arquivo 5 de 12
-// Estado e ações da tela de escolha.
-//
-// PASSO A PASSO (troque [ ] por [x] quando terminar; no fim, apague este bloco
-// e deixe só comentários úteis):
-//   [ ] 1. Crie `EscolherLocalEstado` com: carregando, municipios, municipioSelecionado,
-//          setores, setorSelecionado, concluido, semMunicipios.
-//   [ ] 2. Crie `EscolherLocalViewModel(repositorio: LocalRepositorio)` com StateFlow
-//          `estado` (receita R3).
-//   [ ] 3. Ações: escolherMunicipio(id) (carrega os setores dele), escolherSetor(id),
-//          confirmar() (chama repositorio.escolherSetor e marca concluido).
-//   [ ] 4. Ao iniciar, carregue os municípios; se vierem vazios, marque semMunicipios.
-//
-// Requisitos: RF01, RN06, RN07, RNF05, CU01  ·  Receitas: docs/RECEITAS.md  ·  Bíblia:
-//        docs/guias/integrante-2.md
-// ======================================================================
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+
+data class EscolherLocalEstado(
+    val carregando: Boolean = true,
+    val municipios: List<Municipio> = emptyList(),
+    val municipioSelecionado: Municipio? = null,
+    val setores: List<Setor> = emptyList(),
+    val setorSelecionado: Setor? = null,
+    val concluido: Boolean = false,
+    val semMunicipios: Boolean = false,
+)
+
+class EscolherLocalViewModel(private val repositorio: LocalRepositorio) : ViewModel() {
+    private val _estado = MutableStateFlow(EscolherLocalEstado())
+    val estado: StateFlow<EscolherLocalEstado> = _estado.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            val municipios = repositorio.listarMunicipios().sortedBy { it.nome.lowercase() }
+            _estado.value = EscolherLocalEstado(
+                carregando = false,
+                municipios = municipios,
+                semMunicipios = municipios.isEmpty(),
+            )
+        }
+    }
+
+    fun escolherMunicipio(id: Long) {
+        viewModelScope.launch {
+            val municipio = _estado.value.municipios.firstOrNull { it.id == id } ?: return@launch
+            val setores = repositorio.listarSetores(id).sortedBy { it.nome.lowercase() }
+            _estado.update { it.copy(municipioSelecionado = municipio, setores = setores, setorSelecionado = null) }
+        }
+    }
+
+    fun escolherSetor(id: Long) {
+        _estado.update { atual -> atual.copy(setorSelecionado = atual.setores.firstOrNull { it.id == id }) }
+    }
+
+    fun confirmar() {
+        val setor = _estado.value.setorSelecionado ?: return
+        viewModelScope.launch {
+            repositorio.escolherSetor(setor.id)
+            _estado.update { it.copy(concluido = true) }
+        }
+    }
+}

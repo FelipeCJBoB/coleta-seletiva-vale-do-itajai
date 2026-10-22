@@ -3,6 +3,7 @@ package br.edu.univali.coletaseletiva.di
 import androidx.compose.runtime.staticCompositionLocalOf
 import br.edu.univali.coletaseletiva.dados.Banco
 import br.edu.univali.coletaseletiva.dados.DriverFactory
+import br.edu.univali.coletaseletiva.funcionalidades.local.LocalRepositorioSql
 import br.edu.univali.coletaseletiva.util.Relogio
 import br.edu.univali.coletaseletiva.util.RelogioDoSistema
 
@@ -25,7 +26,7 @@ class AppContainer(
     suspend fun iniciar() {
         // ===== INTEGRANTE 2 (PB07, PB08): dados de demonstração =====
         // início
-
+        localRepositorio.semearSeVazio()
         // fim
 
 
@@ -43,7 +44,7 @@ class AppContainer(
 
     // ===== INTEGRANTE 2 (PB07, PB08): local e calendário =====
     // início
-
+    val localRepositorio: LocalRepositorioSql by lazy { LocalRepositorioSql(banco) }
     // fim
 
 
