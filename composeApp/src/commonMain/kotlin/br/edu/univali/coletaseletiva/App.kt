@@ -1,7 +1,6 @@
 package br.edu.univali.coletaseletiva
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -13,10 +12,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import br.edu.univali.coletaseletiva.di.AppContainer
 import br.edu.univali.coletaseletiva.di.LocalContainer
+import br.edu.univali.coletaseletiva.funcionalidades.inicio.Tema
 import br.edu.univali.coletaseletiva.navegacao.AppNavegacao
 import br.edu.univali.coletaseletiva.navegacao.Navegador
 
-/** Raiz do app (Android e iOS). Infraestrutura: o Integrante 2 troca o MaterialTheme pelo Tema do app (PB07). */
+/** Raiz do app (Android e iOS). Infraestrutura: usa o Tema do app (PB07b). */
 @Composable
 fun App(container: AppContainer) {
     val navegador = remember { Navegador() }
@@ -26,7 +26,7 @@ fun App(container: AppContainer) {
         pronto = true
     }
     CompositionLocalProvider(LocalContainer provides container) {
-        MaterialTheme {
+        Tema {
             Surface(modifier = Modifier.fillMaxSize()) {
                 if (pronto) AppNavegacao(navegador)
             }

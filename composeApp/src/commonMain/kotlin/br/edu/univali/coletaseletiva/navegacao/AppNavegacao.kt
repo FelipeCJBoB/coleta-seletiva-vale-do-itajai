@@ -1,6 +1,7 @@
 package br.edu.univali.coletaseletiva.navegacao
 
 import androidx.compose.runtime.Composable
+import br.edu.univali.coletaseletiva.funcionalidades.inicio.InicioRota
 import br.edu.univali.coletaseletiva.funcionalidades.local.EscolherLocalRota
 
 /**
@@ -16,7 +17,7 @@ fun AppNavegacao(navegador: Navegador) {
 
             // ===== INTEGRANTE 2 (PB07): Início =====
             Rota.Inicio -> {
-                TelaEmConstrucao("Início", navegador)
+                InicioRota(navegador)
             }
 
 
