@@ -1,21 +1,51 @@
--- ======================================================================
--- ARQUIVO-ESQUELETO · Integrante 2 · Cartão PB07 · arquivo 8 de 12
--- Tabelas de municípios, setores e escolha do usuário.
---
--- PASSO A PASSO (troque [ ] por [x] quando terminar; no fim, apague este bloco
--- e deixe só comentários úteis):
---   [ ] 1. Tabela `municipio`: id (inteiro, chave primária), nome (texto), uf (texto).
---   [ ] 2. Tabela `setor`: id (inteiro, chave primária), municipio_id (inteiro, referencia
---          municipio), nome (texto).
---   [ ] 3. Tabela `escolha_local`: guarda UMA linha só (id fixo 1) com setor_id. Dica: use
---          'INSERT OR REPLACE' para trocar a escolha.
---   [ ] 4. Consultas (com nome): listarMunicipios (ordem alfabética),
---          listarSetoresDoMunicipio(municipio_id), buscarSetorEscolhido (junta
---          escolha_local + setor + municipio), salvarEscolha, inserirMunicipio,
---          inserirSetor, contarMunicipios.
---   [ ] 5. Receita: R6. Só escreva este arquivo DEPOIS do PB06b mergeado (precisa do
---          Banco).
---
--- Requisitos: RF01, RN06, RN07, RNF05, CU01  ·  Receitas: docs/RECEITAS.md  ·  Bíblia:
---        docs/guias/integrante-2.md
--- ======================================================================
+-- Tabelas do local (PB07): municípios, setores e a escolha do usuário.
+-- Os dados de demonstração entram por LocalRepositorioSql.semearSeVazio().
+
+CREATE TABLE municipio (
+    id INTEGER NOT NULL PRIMARY KEY,
+    nome TEXT NOT NULL,
+    uf TEXT NOT NULL
+);
+
+CREATE TABLE setor (
+    id INTEGER NOT NULL PRIMARY KEY,
+    municipio_id INTEGER NOT NULL REFERENCES municipio(id),
+    nome TEXT NOT NULL
+);
+
+-- Guarda UMA linha só (id fixo 1): o setor escolhido pelo usuário (RN07: fica só no aparelho).
+CREATE TABLE escolha_local (
+    id INTEGER NOT NULL PRIMARY KEY CHECK (id = 1),
+    setor_id INTEGER NOT NULL REFERENCES setor(id)
+);
+
+listarMunicipios:
+SELECT id, nome, uf FROM municipio ORDER BY nome COLLATE NOCASE;
+
+listarSetoresDoMunicipio:
+SELECT id, municipio_id, nome FROM setor WHERE municipio_id = ? ORDER BY nome COLLATE NOCASE;
+
+buscarSetorEscolhido:
+SELECT setor.id AS setor_id, municipio.nome AS municipio_nome, setor.nome AS setor_nome
+FROM escolha_local
+JOIN setor ON setor.id = escolha_local.setor_id
+JOIN municipio ON municipio.id = setor.municipio_id
+WHERE escolha_local.id = 1;
+
+salvarEscolha:
+INSERT OR REPLACE INTO escolha_local(id, setor_id) VALUES (1, ?);
+
+inserirMunicipio:
+INSERT INTO municipio(nome, uf) VALUES (?, ?);
+
+inserirMunicipioComId:
+INSERT INTO municipio(id, nome, uf) VALUES (?, ?, ?);
+
+inserirSetor:
+INSERT INTO setor(municipio_id, nome) VALUES (?, ?);
+
+inserirSetorComId:
+INSERT INTO setor(id, municipio_id, nome) VALUES (?, ?, ?);
+
+contarMunicipios:
+SELECT COUNT(*) FROM municipio;
