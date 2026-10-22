@@ -35,6 +35,7 @@ No TDD, o commit `test:` (teste falhando) vem antes do `feat:` (código que faz 
 
 - Cada cartão = 1 branch = 1 Pull Request. Siga o ciclo completo em [docs/guias](docs/guias/) (bíblia do seu Integrante) e as receitas em [docs/RECEITAS.md](docs/RECEITAS.md).
 - Commits na ordem: `test:` (falha) → `feat:` (passa) → `refactor:`. Esse histórico é a evidência do TDD; por isso o merge é **merge commit** (nada de squash).
+- O CI roda **em todo push** (aba Actions do GitHub): dê push depois de cada commit para ver o vermelho do `test:` e o verde do `feat:`.
 - O Integrante 1 revisa e faz o merge de todos os PRs; o CI precisa estar verde.
 - Cada um edita só a própria pasta em `funcionalidades/` e o próprio bloco em `AppContainer.kt` e `AppNavegacao.kt`.
 

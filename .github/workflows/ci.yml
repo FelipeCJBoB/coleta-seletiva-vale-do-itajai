@@ -1,10 +1,11 @@
 name: CI
 
+# Roda em TODO push (qualquer branch): assim o vermelho (teste falhando) e o verde (teste passando)
+# aparecem na aba Actions a cada commit, e isso é a evidência do TDD. Não usamos o gatilho
+# pull_request para não rodar tudo duas vezes. O job de interface (emulador) só roda quando pedido.
 on:
   workflow_dispatch:
   push:
-    branches: [main]
-  pull_request:
 
 jobs:
   testes:
