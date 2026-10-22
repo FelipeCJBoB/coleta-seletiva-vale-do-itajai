@@ -1,6 +1,7 @@
 package br.edu.univali.coletaseletiva.di
 
 import androidx.compose.runtime.staticCompositionLocalOf
+import br.edu.univali.coletaseletiva.dados.Banco
 import br.edu.univali.coletaseletiva.dados.DriverFactory
 import br.edu.univali.coletaseletiva.util.Relogio
 import br.edu.univali.coletaseletiva.util.RelogioDoSistema
@@ -36,7 +37,7 @@ class AppContainer(
 
     // ===== INTEGRANTE 5 (PB06b): banco de dados =====
     // início
-
+    val banco: Banco by lazy { Banco(driverFactory.criar(Banco.Schema)) }
     // fim
 
 
