@@ -1,19 +1,25 @@
 package br.edu.univali.coletaseletiva.funcionalidades.inicio
 
-// ======================================================================
-// ARQUIVO-ESQUELETO · Integrante 2 · Cartão PB07b · arquivo 1 de 6
-// Cores e tipografia do app.
-//
-// PASSO A PASSO (troque [ ] por [x] quando terminar; no fim, apague este bloco
-// e deixe só comentários úteis):
-//   [ ] 1. Escolham no grupo: nome do app (hoje 'Coleta Seletiva Vale') e uma cor
-//          principal (verde é o natural para coleta seletiva).
-//   [ ] 2. Crie `Tema(content)`: um Composable que envolve MaterialTheme com colorScheme
-//          (lightColorScheme com primary, secondary, background) — receita R4.
-//   [ ] 3. Em App.kt, troque MaterialTheme por Tema.
-//   [ ] 4. Nome do app: edite 'android:label' no AndroidManifest.xml. Ícone: Android
-//          Studio > clique direito em 'res' > New > Image Asset (gera tudo sozinho).
-//
-// Requisitos: RNF01, D-04 (dados de demonstração identificados)  ·  Receitas:
-//        docs/RECEITAS.md  ·  Bíblia: docs/guias/integrante-2.md
-// ======================================================================
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.lightColorScheme
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+
+/** Cores do app: verde de coleta seletiva. */
+private val CoresDoApp = lightColorScheme(
+    primary = Color(0xFF1B7F4C),
+    onPrimary = Color.White,
+    primaryContainer = Color(0xFFD6F0E0),
+    onPrimaryContainer = Color(0xFF0A3D24),
+    secondary = Color(0xFF3F6F57),
+    onSecondary = Color.White,
+    background = Color(0xFFF6FAF7),
+    onBackground = Color(0xFF14211C),
+    surface = Color(0xFFF6FAF7),
+    onSurface = Color(0xFF14211C),
+)
+
+@Composable
+fun Tema(conteudo: @Composable () -> Unit) {
+    MaterialTheme(colorScheme = CoresDoApp, content = conteudo)
+}
