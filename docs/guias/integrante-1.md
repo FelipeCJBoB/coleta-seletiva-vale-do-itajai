@@ -9,13 +9,14 @@ Cuida do processo, da qualidade e da entrega. Garante que o app, os testes e o r
 **Você faz:**
 - Trello, eventos do Scrum, impedimentos
 - Revisar e fazer o merge de TODOS os Pull Requests
+- PB07 e PB07b (feitos, por combinado com o Integrante 2)
 - Evidências do TDD (PB13) e roteiro de validação (PB14)
 - Seção 6 do relatório (Scrum) e conferência final contra a rubrica
 - Falar com o professor (prazo, formato)
 - CI (GitHub Actions) e iOS, junto com o Claude
 
 **Você não faz:**
-- Código das funcionalidades (dos Integrantes 2 a 5)
+- Código das funcionalidades dos Integrantes 2 a 5 (exceção combinada: o PB07 e o PB07b, que o Integrante 1 fez com o Claude para aliviar o Integrante 2)
 
 ## Preparação (até domingo 25/10) — vale para os 5
 

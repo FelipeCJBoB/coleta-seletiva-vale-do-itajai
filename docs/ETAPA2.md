@@ -17,8 +17,8 @@ Tela (Compose)  →  ViewModel (estado + ações)  →  Repositório (interface)
 
 | Tela | O que mostra | Dono | Cartão |
 |---|---|---|---|
-| Início | Mostra 'Município · Setor' e 5 atalhos (Calendário, Pontos de descarte, Guia de separação, Meus pontos, Dicas). Aviso 'Dados de demonstração'. | Integrante 2 | PB07b |
-| Escolher local | Escolhe município e depois setor; guarda no aparelho. | Integrante 2 | PB07 |
+| Início | Mostra 'Município · Setor' e 5 atalhos (Calendário, Pontos de descarte, Guia de separação, Meus pontos, Dicas). Aviso 'Dados de demonstração'. | Integrante 1 com o Claude (pronta) | PB07b |
+| Escolher local | Escolhe município e depois setor; guarda no aparelho. | Integrante 1 com o Claude (pronta) | PB07 |
 | Calendário | Dias da coleta seletiva e comum + próxima data (com feriados). Sem horário fixo. | Integrante 2 | PB08 |
 | Pontos de descarte | Lista do município com chips de filtro por material e aviso para pilhas/óleo. | Integrante 3 | PB09 |
 | Detalhe do ponto | Endereço, horário, materiais com limite, coordenadas e botão 'Abrir rota' (app de mapas). | Integrante 3 | PB10 |
@@ -56,13 +56,14 @@ RN01 a RN03 (calendário e feriados), RN04 (pilhas/óleo só em ponto de descart
 | D-08 | Guia e dicas são conteúdo estático | Itens do guia e dicas ficam em listas dentro do app (funcionam offline, sem SQL). Município, setor, calendário, pontos de descarte e descartes ficam no SQLite. |
 | D-09 | Feriados: só 2026 e 2027 | Feriados fixos + Sexta-feira Santa tabelada para 2026 e 2027 (a Páscoa muda a cada ano). Registrado no relatório como limitação. |
 | D-10 | Voltar do celular | Navegação por botão 'Voltar' na tela. O botão voltar do sistema Android ainda fecha o app (melhoria futura, só se sobrar tempo). |
+| D-12 | PB07 e PB07b feitos pelo Integrante 1 com o Claude | Por combinado entre o Integrante 1 e o Integrante 2 (divisão de carga), o Integrante 1 fez o PB07 e o PB07b com o Claude, em TDD, com PRs #4 e #5. O Integrante 2 segue com PB08 e PB12. Também entrou infraestrutura: EscopoDeTela (ViewModel novo a cada vez que a tela abre) e `configChanges` no Manifest. |
 | D-11 | iOS | Os testes comuns rodam no simulador iOS pelo CI (macOS). O app iOS completo (projeto Xcode) é item do Integrante 1 com o Claude na Sprint 3/4; se não der, o relatório diz exatamente o que foi feito. |
 
 ## Quem espera quem
 
-- **PB06b (Integrante 5) → todos:** O `banco` e o `bancoEmMemoria()` ficam prontos até qua 28/10. Até lá cada um faz o que não precisa de banco (modelos, regras, testes, ViewModel, tela). O passo SQL de cada cartão só depois.
+- **PB06b (FEITO, PR #2) → todos:** O `banco` e o `bancoEmMemoria()` já estão na main (rode `git pull`). Até lá cada um faz o que não precisa de banco (modelos, regras, testes, ViewModel, tela). O passo SQL de cada cartão só depois.
 - **Material (Integrante 3, PB09) → PB16:** O enum `Material` sai num PR pequeno até qua 28/10. O Integrante 5 usa nos pontos.
-- **PB07 (Integrante 2) → PB07b, PB08, PB09, PB12:** O `LocalRepositorio` (interface + Fake) é o primeiro PR do Integrante 2 (até qua 28/10). Todos que precisam saber 'qual município/setor' usam o Fake dele nos testes.
+- **PB07 (FEITO, PR #4) → PB08, PB09, PB12:** O `LocalRepositorio` e o `LocalRepositorioFake` já estão na main. Todos que precisam saber 'qual município/setor' usam o Fake nos testes (rode `git pull`).
 - **PB08 → PB12:** O lembrete usa a regra `proximaColeta`.
 
 ## Mapa: cartão → arquivos → testes

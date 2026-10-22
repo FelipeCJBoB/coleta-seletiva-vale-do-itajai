@@ -77,6 +77,8 @@ Liga o banco para todo mundo, faz a pontuação (registrar descarte, saldo, hist
 ### PB06b · Banco local ligado e ajudante de teste
 *Integrante 5 · Sprint 2 · 3 pontos · Requisitos: RNF05 (parte do PB06)*
 
+> **STATUS: FEITO e mergeado na main (PR #2) pelo Integrante 5. Fica aqui só como referência.**
+
 **História:** Como time, quero o banco SQLite ligado ao app e uma forma de testá-lo em memória, para todas as funcionalidades guardarem dados.
 
 **Objetivo:** Deixar o banco funcionando para todos: a primeira tabela (descarte), o `banco` dentro do AppContainer e o ajudante `bancoEmMemoria()` que os outros 3 desenvolvedores vão usar nos testes. É a primeira tarefa da Sprint 2: os outros dependem dela para o passo SQL. Meta: PR mergeado até qua 28/10.

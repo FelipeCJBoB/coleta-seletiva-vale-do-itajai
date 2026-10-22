@@ -83,13 +83,13 @@ Papéis e donos na Etapa 2:
 
 | Integrante | Papel | Cartões |
 |---|---|---|
-| 1 | Scrum Master e Validação (não programa funcionalidades) | Trello, eventos, revisão e merge de todos os PRs, PB13, PB14, seção 6, iOS/CI, contato com o professor |
-| 2 | Dev: local, calendário e a cara do app | PB07, PB07b, PB08, PB12 (opcional) |
+| 1 | Scrum Master e Validação. Não programa funcionalidades, exceto o PB07 e o PB07b, assumidos com o Claude por combinado com o Integrante 2 (D-12) | Trello, eventos, revisão e merge de todos os PRs, PB13, PB14, seção 6, iOS/CI, contato com o professor; PB07 e PB07b (feitos) |
+| 2 | Dev: calendário e lembrete | PB08, PB12 (opcional). PB07 e PB07b já feitos pelo Integrante 1 com o Claude |
 | 3 | Dev: pontos de descarte e dicas | PB09 (inclui o enum Material), PB10, PB17 |
 | 4 | Dev: guia e vídeo | PB11, vídeo 7.2 |
 | 5 | Dev: banco, pontuação e documentação | PB06b, PB16, relatório 5.1.1 a 5.1.4, PDF |
 
-Decisões novas (D-07 a D-11) em [ETAPA2.md](ETAPA2.md). A data oficial da Etapa 2 ainda precisa ser confirmada com o professor (Integrante 1).
+Decisões novas (D-07 a D-12) em [ETAPA2.md](ETAPA2.md). A data oficial da Etapa 2 ainda precisa ser confirmada com o professor (Integrante 1).
 
 ## 5. Como trabalhamos
 

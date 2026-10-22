@@ -20,9 +20,9 @@ Dono = Integrante responsável (os detalhes de cada cartão estão em [guias/](g
 
 | ID | História | Sprint | Prior. | Pontos | Dono |
 |---|---|---|---|---|---|
-| PB06b | Como time, quero o banco local ligado e um ajudante de teste em memória (parte do PB06; a base KMP/CI já está pronta) | 2 | 1 | 3 | 5 |
-| PB07 | Como morador, quero escolher meu município e setor de coleta (RF01) | 2 | 1 | 3 | 2 |
-| PB07b | Como morador, quero uma tela inicial com meu local e atalhos, e a identidade visual do app (RNF01) | 2 | 1 | 2 | 2 |
+| PB06b | Como time, quero o banco local ligado e um ajudante de teste em memória (parte do PB06; a base KMP/CI já está pronta) | 2 | 1 | 3 | 5 (feito, PR #2) |
+| PB07 | Como morador, quero escolher meu município e setor de coleta (RF01) | 2 | 1 | 3 | 1 com o Claude (feito, PR #4) |
+| PB07b | Como morador, quero uma tela inicial com meu local e atalhos, e a identidade visual do app (RNF01) | 2 | 1 | 2 | 1 com o Claude (feito, PR #5) |
 | PB08 | Como morador, quero ver o calendário de coleta do meu setor com a próxima data, considerando feriados (RF03) | 3 | 1 | 5 | 2 |
 | PB09 | Como morador, quero ver os pontos de descarte do meu município e filtrar por material (RF04, RF06, RF07) | 2-3 | 2 | 8 | 3 |
 | PB10 | Como morador, quero ver o ponto em detalhe e abrir a rota no app de mapas (RF05) | 3 | 3 | 3 | 3 |

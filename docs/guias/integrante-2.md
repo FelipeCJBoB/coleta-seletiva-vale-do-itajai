@@ -4,13 +4,12 @@
 
 ## Seu papel em 1 minuto
 
-Escolher local, tela Início e identidade visual (nome, ícone, cores), calendário de coleta com feriados e, se sobrar tempo, o lembrete.
+Calendário de coleta com feriados e, se sobrar tempo, o lembrete. O PB07 (escolher local) e o PB07b (Início, tema e ícone) foram feitos pelo Integrante 1 com o Claude, por combinado, e já estão na main.
 
 **Você faz:**
-- PB07 Escolher município e setor
-- PB07b Tema, ícone e tela Início
-- PB08 Calendário com feriados
+- PB08 Calendário com feriados (seu cartão principal)
 - PB12 Lembrete (opcional)
+- PB07 e PB07b: já feitos pelo Integrante 1 com o Claude (combinado); use como referência
 
 **Você não faz:**
 - Mexer nas pastas dos outros sem avisar
@@ -76,6 +75,8 @@ Escolher local, tela Início e identidade visual (nome, ícone, cores), calendá
 
 ### PB07 · Escolher município e setor
 *Integrante 2 · Sprint 2 · 3 pontos · Requisitos: RF01, RN06, RN07, RNF05, CU01*
+
+> **STATUS: FEITO e mergeado na main (PR #4). Assumido pelo Integrante 1 com o Claude, por combinado com o Integrante 2. NÃO refazer: use como referência de como um cartão fica pronto (o LocalRepositorio e o LocalRepositorioFake já podem ser usados nos seus testes).**
 
 **História:** Como morador, quero escolher meu município e setor de coleta entre os cadastrados, para o app mostrar as informações do meu local.
 
@@ -162,6 +163,8 @@ Escolher local, tela Início e identidade visual (nome, ícone, cores), calendá
 
 ### PB07b · Identidade do app e tela Início
 *Integrante 2 · Sprint 2 · 2 pontos · Requisitos: RNF01, D-04 (dados de demonstração identificados)*
+
+> **STATUS: FEITO e mergeado na main (PR #5). Assumido pelo Integrante 1 com o Claude, por combinado com o Integrante 2. NÃO refazer: o Tema, a tela Início e o ícone já existem.**
 
 **História:** Como morador, quero uma tela inicial com o meu local e atalhos, para chegar a calendário, pontos e guia em até 2 toques.
 
