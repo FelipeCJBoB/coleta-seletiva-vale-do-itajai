@@ -1,16 +1,32 @@
 package br.edu.univali.coletaseletiva.funcionalidades.inicio
 
-// ======================================================================
-// ARQUIVO-ESQUELETO · Integrante 2 · Cartão PB07b · arquivo 3 de 6
-// Estado do Início.
-//
-// PASSO A PASSO (troque [ ] por [x] quando terminar; no fim, apague este bloco
-// e deixe só comentários úteis):
-//   [ ] 1. Crie `InicioEstado` com: carregando, local (texto 'Município · Setor' ou nulo),
-//          precisaEscolherLocal.
-//   [ ] 2. Crie `InicioViewModel(local: LocalRepositorio)` (receita R3): ao iniciar, lê
-//          repositorio.setorEscolhido() e monta o estado.
-//
-// Requisitos: RNF01, D-04 (dados de demonstração identificados)  ·  Receitas:
-//        docs/RECEITAS.md  ·  Bíblia: docs/guias/integrante-2.md
-// ======================================================================
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import br.edu.univali.coletaseletiva.funcionalidades.local.LocalRepositorio
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+
+data class InicioEstado(
+    val carregando: Boolean = true,
+    /** Texto "Município · Setor" ou nulo se o usuário ainda não escolheu. */
+    val local: String? = null,
+    val precisaEscolherLocal: Boolean = false,
+)
+
+class InicioViewModel(private val local: LocalRepositorio) : ViewModel() {
+    private val _estado = MutableStateFlow(InicioEstado())
+    val estado: StateFlow<InicioEstado> = _estado.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            val escolhido = local.setorEscolhido()
+            _estado.value = InicioEstado(
+                carregando = false,
+                local = escolhido?.let { "${it.municipio} · ${it.setor}" },
+                precisaEscolherLocal = escolhido == null,
+            )
+        }
+    }
+}
