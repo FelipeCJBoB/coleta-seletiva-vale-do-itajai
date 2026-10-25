@@ -280,7 +280,7 @@ Calendário de coleta com feriados e, se sobrar tempo, o lembrete. O PB07 (escol
    - 1 teste: renderiza CalendarioTela com estado de exemplo e confere 'Coleta seletiva', 'Coleta comum' e a data da próxima coleta (R5).
    - ☐ teste: `mostra_os_dois_tipos_e_a_proxima_data`
 12. `composeApp/src/commonMain/sqldelight/br/edu/univali/coletaseletiva/dados/calendario.sq` — Dias de coleta por setor.
-   - Tabela `coleta_dia`: setor_id (inteiro), tipo (texto: 'SELETIVA' ou 'COMUM'), dia_semana (inteiro 1 a 7, com 1 = segunda). Chave primária composta pelas 3 colunas.
+   - Tabela `coleta_dia`: setor_id (inteiro), tipo (texto: 'SELETIVA' ou 'COMUM'), dia_semana (inteiro 1 a 7, com 1 = segunda). Chave primária composta pelas 3 colunas. Escreva CREATE TABLE IF NOT EXISTS (regra do projeto D-13: sem isso o app trava em emuladores que já têm um banco antigo).
    - Consultas: listarColetasDoSetor(setor_id), inserirColeta(setor_id, tipo, dia_semana), contarColetas.
    - Receita R6. Faça só depois do PB07 (setores existem).
 13. `composeApp/src/commonMain/kotlin/br/edu/univali/coletaseletiva/funcionalidades/calendario/CalendarioRepositorioSql.kt` — Repositório SQL do calendário.
