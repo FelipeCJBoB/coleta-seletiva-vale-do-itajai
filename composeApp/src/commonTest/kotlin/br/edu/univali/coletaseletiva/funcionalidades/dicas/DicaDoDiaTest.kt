@@ -1,17 +1,33 @@
 package br.edu.univali.coletaseletiva.funcionalidades.dicas
 
-// ======================================================================
-// ARQUIVO-ESQUELETO · Integrante 3 · Cartão PB17 · arquivo 2 de 10
-// Testes dos casos 1 e 2. ESCREVA ANTES.
-//
-// PASSO A PASSO (troque [ ] por [x] quando terminar; no fim, apague este bloco
-// e deixe só comentários úteis):
-//   [ ] 1. Use LocalDate fixo.
-//
-// TESTES A ESCREVER (um @Test por linha; escreva ANTES do código = TDD):
-//   [ ] escolhe_a_dica_pela_posicao_do_dia_do_ano
-//   [ ] dias_seguidos_dao_dicas_diferentes
-//
-// Requisitos: RF11, CU08  ·  Receitas: docs/RECEITAS.md  ·  Bíblia:
-//        docs/guias/integrante-3.md
-// ======================================================================
+import kotlinx.datetime.LocalDate
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
+
+class DicaDoDiaTest {
+
+    private val dicasExemplo = (1..8).map { i ->
+        Dica(id = i.toLong(), titulo = "Dica $i", texto = "Texto da dica $i")
+    }
+
+    @Test
+    fun escolhe_a_dica_pela_posicao_do_dia_do_ano() {
+        val dia1 = LocalDate(2025, 1, 1) // dayOfYear = 1
+        val dica = dicaDoDia(dicasExemplo, dia1)
+
+        // 1 mod 8 = 1 -> Dica de posição 1 (Dica 2)
+        assertEquals(dicasExemplo[1 % 8], dica)
+    }
+
+    @Test
+    fun dias_seguidos_dao_dicas_diferentes() {
+        val dia10 = LocalDate(2025, 1, 10)
+        val dia11 = LocalDate(2025, 1, 11)
+
+        val dica10 = dicaDoDia(dicasExemplo, dia10)
+        val dica11 = dicaDoDia(dicasExemplo, dia11)
+
+        assertNotEquals(dica10, dica11)
+    }
+}

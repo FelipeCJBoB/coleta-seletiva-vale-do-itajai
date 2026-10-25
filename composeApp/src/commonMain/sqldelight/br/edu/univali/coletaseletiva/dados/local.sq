@@ -1,20 +1,20 @@
 -- Tabelas do local (PB07): municípios, setores e a escolha do usuário.
 -- Os dados de demonstração entram por LocalRepositorioSql.semearSeVazio().
 
-CREATE TABLE municipio (
+CREATE TABLE IF NOT EXISTS municipio (
     id INTEGER NOT NULL PRIMARY KEY,
     nome TEXT NOT NULL,
     uf TEXT NOT NULL
 );
 
-CREATE TABLE setor (
+CREATE TABLE IF NOT EXISTS setor (
     id INTEGER NOT NULL PRIMARY KEY,
     municipio_id INTEGER NOT NULL REFERENCES municipio(id),
     nome TEXT NOT NULL
 );
 
 -- Guarda UMA linha só (id fixo 1): o setor escolhido pelo usuário (RN07: fica só no aparelho).
-CREATE TABLE escolha_local (
+CREATE TABLE IF NOT EXISTS escolha_local (
     id INTEGER NOT NULL PRIMARY KEY CHECK (id = 1),
     setor_id INTEGER NOT NULL REFERENCES setor(id)
 );
@@ -38,14 +38,14 @@ INSERT OR REPLACE INTO escolha_local(id, setor_id) VALUES (1, ?);
 inserirMunicipio:
 INSERT INTO municipio(nome, uf) VALUES (?, ?);
 
-inserirMunicipioComId:
-INSERT INTO municipio(id, nome, uf) VALUES (?, ?, ?);
-
 inserirSetor:
 INSERT INTO setor(municipio_id, nome) VALUES (?, ?);
 
-inserirSetorComId:
-INSERT INTO setor(id, municipio_id, nome) VALUES (?, ?, ?);
-
 contarMunicipios:
 SELECT COUNT(*) FROM municipio;
+
+inserirMunicipioComId:
+INSERT INTO municipio(id, nome, uf) VALUES (?, ?, ?);
+
+inserirSetorComId:
+INSERT INTO setor(id, municipio_id, nome) VALUES (?, ?, ?);

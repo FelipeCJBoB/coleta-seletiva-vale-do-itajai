@@ -1,7 +1,7 @@
 -- Registro de descartes do usuário (usada no PB06b e PB16).
 -- Regras: RN07 (dados locais), RN08 (pontos por material), RN09 (limite diário).
 
-CREATE TABLE descarte (
+CREATE TABLE IF NOT EXISTS descarte (
     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     material TEXT NOT NULL,
     pontos INTEGER NOT NULL,

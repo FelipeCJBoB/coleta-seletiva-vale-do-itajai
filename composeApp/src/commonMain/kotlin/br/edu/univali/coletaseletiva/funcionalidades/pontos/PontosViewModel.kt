@@ -1,17 +1,75 @@
 package br.edu.univali.coletaseletiva.funcionalidades.pontos
 
-// ======================================================================
-// ARQUIVO-ESQUELETO · Integrante 3 · Cartão PB09 · arquivo 9 de 16
-// Estado da lista de pontos.
-//
-// PASSO A PASSO (troque [ ] por [x] quando terminar; no fim, apague este bloco
-// e deixe só comentários úteis):
-//   [ ] 1. `PontosEstado`: carregando, semLocal, pontosFiltrados, filtro (Material?),
-//          avisoRN04 (Boolean).
-//   [ ] 2. `PontosViewModel(local, pontos)`: carrega os pontos do município do setor
-//          escolhido; `filtrarPor(material: Material?)` atualiza a lista com filtrarPontos
-//          (R3).
-//
-// Requisitos: RF04, RF06, RF07, RN04, RN05, RNF04, CU03  ·  Receitas: docs/RECEITAS.md  ·
-//        Bíblia: docs/guias/integrante-3.md
-// ======================================================================
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import br.edu.univali.coletaseletiva.funcionalidades.local.LocalRepositorio
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+
+/**
+ * Estado da tela de pontos de descarte.
+ */
+data class PontosEstado(
+    val carregando: Boolean = true,
+    val semLocal: Boolean = false,
+    val pontosFiltrados: List<PontoDeDescarte> = emptyList(),
+    val filtro: Material? = null,
+    val avisoRN04: Boolean = false,
+)
+
+/**
+ * ViewModel que gerencia a lista de pontos de descarte por município e filtro por material.
+ */
+class PontosViewModel(
+    private val localRepo: LocalRepositorio,
+    private val pontosRepo: PontosRepositorio,
+) : ViewModel() {
+
+    private val _estado = MutableStateFlow(PontosEstado())
+    val estado: StateFlow<PontosEstado> = _estado.asStateFlow()
+
+    private var todosPontosDoMunicipio: List<PontoDeDescarte> = emptyList()
+
+    init {
+        carregar()
+    }
+
+    private fun carregar() {
+        viewModelScope.launch {
+            val escolhido = localRepo.setorEscolhido()
+            if (escolhido == null) {
+                _estado.value = PontosEstado(carregando = false, semLocal = true)
+                return@launch
+            }
+
+            val municipio = localRepo.listarMunicipios().find { it.nome == escolhido.municipio }
+            if (municipio == null) {
+                _estado.value = PontosEstado(carregando = false, semLocal = true)
+                return@launch
+            }
+
+            todosPontosDoMunicipio = pontosRepo.pontosDoMunicipio(municipio.id)
+            atualizarEstado()
+        }
+    }
+
+    fun filtrarPor(material: Material?) {
+        _estado.value = _estado.value.copy(filtro = material)
+        atualizarEstado()
+    }
+
+    private fun atualizarEstado() {
+        val filtroAtual = _estado.value.filtro
+        val filtrados = filtrarPontos(todosPontosDoMunicipio, filtroAtual)
+        val aviso = filtroAtual == Material.PILHAS_BATERIAS || filtroAtual == Material.OLEO
+
+        _estado.value = _estado.value.copy(
+            carregando = false,
+            semLocal = false,
+            pontosFiltrados = filtrados,
+            avisoRN04 = aviso,
+        )
+    }
+}
