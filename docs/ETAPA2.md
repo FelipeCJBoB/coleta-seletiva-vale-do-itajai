@@ -56,6 +56,7 @@ RN01 a RN03 (calendário e feriados), RN04 (pilhas/óleo só em ponto de descart
 | D-08 | Guia e dicas são conteúdo estático | Itens do guia e dicas ficam em listas dentro do app (funcionam offline, sem SQL). Município, setor, calendário, pontos de descarte e descartes ficam no SQLite. |
 | D-09 | Feriados: só 2026 e 2027 | Feriados fixos + Sexta-feira Santa tabelada para 2026 e 2027 (a Páscoa muda a cada ano). Registrado no relatório como limitação. |
 | D-10 | Voltar do celular | Navegação por botão 'Voltar' na tela. O botão voltar do sistema Android ainda fecha o app (melhoria futura, só se sobrar tempo). |
+| D-13 | Tabelas novas com IF NOT EXISTS | Toda tabela nova em arquivo .sq usa CREATE TABLE IF NOT EXISTS. O DriverFactory do Android cria as tabelas que faltam ao abrir o app (assim um emulador com banco antigo ganha as tabelas novas). Mudou colunas de uma tabela existente? Desinstale o app do emulador (Wipe Data). Quem introduziu isso: Integrante 3, no PR #6. |
 | D-12 | PB07 e PB07b feitos pelo Integrante 1 com o Claude | Por combinado entre o Integrante 1 e o Integrante 2 (divisão de carga), o Integrante 1 fez o PB07 e o PB07b com o Claude, em TDD, com PRs #4 e #5. O Integrante 2 segue com PB08 e PB12. Também entrou infraestrutura: EscopoDeTela (ViewModel novo a cada vez que a tela abre) e `configChanges` no Manifest. |
 | D-11 | iOS | Os testes comuns rodam no simulador iOS pelo CI (macOS). O app iOS completo (projeto Xcode) é item do Integrante 1 com o Claude na Sprint 3/4; se não der, o relatório diz exatamente o que foi feito. |
 

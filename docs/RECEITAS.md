@@ -289,7 +289,7 @@ contar:
 SELECT COUNT(*) FROM tarefa;
 ```
 
-> Dica: Depois de salvar o .sq rode `.\gradlew.bat testDebugUnitTest` para o Kotlin ser gerado.
+> Dica: Depois de salvar o .sq rode `.\gradlew.bat testDebugUnitTest` para o Kotlin ser gerado. REGRA D-13: escreva sempre CREATE TABLE IF NOT EXISTS (o app abre bancos antigos do emulador e, sem o IF NOT EXISTS, a tabela nova não é criada). Se mudar colunas de uma tabela que já existe, desinstale o app do emulador (Wipe Data).
 
 ## R7 · Repositório SQL e teste com banco em memória
 *Quando usar: Depois da tabela.*
