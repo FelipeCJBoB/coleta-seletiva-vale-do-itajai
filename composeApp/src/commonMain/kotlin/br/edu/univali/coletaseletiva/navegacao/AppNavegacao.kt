@@ -1,8 +1,11 @@
 package br.edu.univali.coletaseletiva.navegacao
 
 import androidx.compose.runtime.Composable
+import br.edu.univali.coletaseletiva.funcionalidades.dicas.DicasRota
 import br.edu.univali.coletaseletiva.funcionalidades.inicio.InicioRota
 import br.edu.univali.coletaseletiva.funcionalidades.local.EscolherLocalRota
+import br.edu.univali.coletaseletiva.funcionalidades.pontos.PontoDetalheRota
+import br.edu.univali.coletaseletiva.funcionalidades.pontos.PontosRota
 
 /**
  * Liga cada Rota à sua tela.
@@ -35,13 +38,13 @@ fun AppNavegacao(navegador: Navegador) {
 
             // ===== INTEGRANTE 3 (PB09): Pontos de descarte =====
             Rota.Pontos -> {
-                TelaEmConstrucao("Pontos de descarte", navegador)
+                PontosRota(navegador)
             }
 
 
             // ===== INTEGRANTE 3 (PB10): Detalhe do ponto =====
             is Rota.PontoDetalhe -> {
-                TelaEmConstrucao("Detalhe do ponto", navegador)
+                PontoDetalheRota(rota.pontoId, navegador)
             }
 
 
@@ -71,7 +74,7 @@ fun AppNavegacao(navegador: Navegador) {
 
             // ===== INTEGRANTE 3 (PB17): Dicas de reciclagem =====
             Rota.Dicas -> {
-                TelaEmConstrucao("Dicas de reciclagem", navegador)
+                DicasRota(navegador)
             }
 
 

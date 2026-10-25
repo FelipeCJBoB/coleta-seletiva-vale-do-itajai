@@ -1,17 +1,50 @@
 package br.edu.univali.coletaseletiva.funcionalidades.pontos
 
-// ======================================================================
-// ARQUIVO-ESQUELETO · Integrante 3 · Cartão PB09 · arquivo 11 de 16
-// Teste de interface.
-//
-// PASSO A PASSO (troque [ ] por [x] quando terminar; no fim, apague este bloco
-// e deixe só comentários úteis):
-//   [ ] 1. 1 teste: renderiza com estado de exemplo e confere nome do ponto e chip 'Todos'
-//          (R5).
-//
-// TESTES A ESCREVER (um @Test por linha; escreva ANTES do código = TDD):
-//   [ ] mostra_chips_e_um_ponto
-//
-// Requisitos: RF04, RF06, RF07, RN04, RN05, RNF04, CU03  ·  Receitas: docs/RECEITAS.md  ·
-//        Bíblia: docs/guias/integrante-3.md
-// ======================================================================
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithText
+import org.junit.Rule
+import org.junit.Test
+
+class PontosTelaTest {
+
+    @get:Rule
+    val rule = createComposeRule()
+
+    @Test
+    fun mostra_chips_e_um_ponto() {
+        val pontoExemplo = PontoDeDescarte(
+            id = 1L,
+            municipioId = 1L,
+            nome = "Ecoponto Central",
+            endereco = "Rua Silva, 100",
+            horario = "Seg a Sex, 8h às 17h",
+            latitude = -26.9,
+            longitude = -48.6,
+            materiais = listOf(
+                MaterialAceito(Material.ELETRONICOS, limite = "até 5 kg"),
+            ),
+        )
+
+        val estadoExemplo = PontosEstado(
+            carregando = false,
+            semLocal = false,
+            pontosFiltrados = listOf(pontoExemplo),
+            filtro = null,
+            avisoRN04 = false,
+        )
+
+        rule.setContent {
+            PontosTela(
+                estado = estadoExemplo,
+                onFiltrar = {},
+                onAbrirPonto = {},
+                onVoltar = {},
+            )
+        }
+
+        rule.onNodeWithText("Ecoponto Central").assertIsDisplayed()
+        rule.onNodeWithText("Todos").assertIsDisplayed()
+        rule.onNodeWithText("Papel").assertIsDisplayed()
+    }
+}

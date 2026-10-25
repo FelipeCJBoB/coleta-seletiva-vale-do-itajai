@@ -1,18 +1,43 @@
--- ======================================================================
--- ARQUIVO-ESQUELETO · Integrante 3 · Cartão PB09 · arquivo 12 de 16
--- Tabelas de pontos e materiais aceitos.
---
--- PASSO A PASSO (troque [ ] por [x] quando terminar; no fim, apague este bloco
--- e deixe só comentários úteis):
---   [ ] 1. `ponto_descarte`: id (chave), municipio_id, nome, endereco, horario, latitude
---          (real), longitude (real).
---   [ ] 2. `ponto_material`: ponto_id, material (texto = nome do enum), limite (texto,
---          pode ser nulo). Chave: ponto_id + material.
---   [ ] 3. Consultas: listarPontosDoMunicipio(municipio_id), buscarPonto(id),
---          listarMateriaisDoPonto(ponto_id), inserirPonto, inserirMaterialDoPonto,
---          contarPontos.
---   [ ] 4. Receita R6.
---
--- Requisitos: RF04, RF06, RF07, RN04, RN05, RNF04, CU03  ·  Receitas: docs/RECEITAS.md  ·
---        Bíblia: docs/guias/integrante-3.md
--- ======================================================================
+CREATE TABLE IF NOT EXISTS ponto_descarte (
+    id INTEGER NOT NULL PRIMARY KEY,
+    municipio_id INTEGER NOT NULL,
+    nome TEXT NOT NULL,
+    endereco TEXT NOT NULL,
+    horario TEXT NOT NULL,
+    latitude REAL NOT NULL,
+    longitude REAL NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS ponto_material (
+    ponto_id INTEGER NOT NULL REFERENCES ponto_descarte(id) ON DELETE CASCADE,
+    material TEXT NOT NULL,
+    limite TEXT,
+    PRIMARY KEY (ponto_id, material)
+);
+
+listarPontosDoMunicipio:
+SELECT id, municipio_id, nome, endereco, horario, latitude, longitude
+FROM ponto_descarte
+WHERE municipio_id = ?
+ORDER BY nome COLLATE NOCASE;
+
+buscarPonto:
+SELECT id, municipio_id, nome, endereco, horario, latitude, longitude
+FROM ponto_descarte
+WHERE id = ?;
+
+listarMateriaisDoPonto:
+SELECT ponto_id, material, limite
+FROM ponto_material
+WHERE ponto_id = ?;
+
+inserirPonto:
+INSERT OR REPLACE INTO ponto_descarte (id, municipio_id, nome, endereco, horario, latitude, longitude)
+VALUES (?, ?, ?, ?, ?, ?, ?);
+
+inserirMaterialDoPonto:
+INSERT OR REPLACE INTO ponto_material (ponto_id, material, limite)
+VALUES (?, ?, ?);
+
+contarPontos:
+SELECT COUNT(*) FROM ponto_descarte;

@@ -3,7 +3,10 @@ package br.edu.univali.coletaseletiva.di
 import androidx.compose.runtime.staticCompositionLocalOf
 import br.edu.univali.coletaseletiva.dados.Banco
 import br.edu.univali.coletaseletiva.dados.DriverFactory
+import br.edu.univali.coletaseletiva.funcionalidades.dicas.DicasRepositorio
+import br.edu.univali.coletaseletiva.funcionalidades.dicas.DicasRepositorioEmMemoria
 import br.edu.univali.coletaseletiva.funcionalidades.local.LocalRepositorioSql
+import br.edu.univali.coletaseletiva.funcionalidades.pontos.PontosRepositorioSql
 import br.edu.univali.coletaseletiva.util.Relogio
 import br.edu.univali.coletaseletiva.util.RelogioDoSistema
 
@@ -32,7 +35,7 @@ class AppContainer(
 
         // ===== INTEGRANTE 3 (PB09): dados de demonstração =====
         // início
-
+        pontosRepositorio.semearSeVazio()
         // fim
     }
 
@@ -50,7 +53,8 @@ class AppContainer(
 
     // ===== INTEGRANTE 3 (PB09, PB10, PB17): pontos de descarte e dicas =====
     // início
-
+    val pontosRepositorio: PontosRepositorioSql by lazy { PontosRepositorioSql(banco) }
+    val dicasRepositorio: DicasRepositorio by lazy { DicasRepositorioEmMemoria() }
     // fim
 
 

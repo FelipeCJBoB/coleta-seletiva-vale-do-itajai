@@ -1,15 +1,53 @@
 package br.edu.univali.coletaseletiva.funcionalidades.pontos
 
-// ======================================================================
-// ARQUIVO-ESQUELETO · Integrante 3 · Cartão PB10 · arquivo 4 de 7
-// Estado do detalhe.
-//
-// PASSO A PASSO (troque [ ] por [x] quando terminar; no fim, apague este bloco
-// e deixe só comentários úteis):
-//   [ ] 1. `PontoDetalheEstado`: carregando, ponto (ou nulo), naoEncontrado, urlDaRota
-//          (calculada a partir do ponto).
-//   [ ] 2. `PontoDetalheViewModel(pontoId, pontos)` (R3).
-//
-// Requisitos: RF05, CU03  ·  Receitas: docs/RECEITAS.md  ·  Bíblia:
-//        docs/guias/integrante-3.md
-// ======================================================================
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+
+/**
+ * Estado da tela de detalhes do ponto de descarte.
+ */
+data class PontoDetalheEstado(
+    val carregando: Boolean = true,
+    val ponto: PontoDeDescarte? = null,
+    val naoEncontrado: Boolean = false,
+    val urlDaRota: String = "",
+)
+
+/**
+ * ViewModel que carrega os detalhes de um ponto de descarte pelo ID e calcula a URL da rota.
+ */
+class PontoDetalheViewModel(
+    private val pontoId: Long,
+    private val pontosRepo: PontosRepositorio,
+) : ViewModel() {
+
+    private val _estado = MutableStateFlow(PontoDetalheEstado())
+    val estado: StateFlow<PontoDetalheEstado> = _estado.asStateFlow()
+
+    init {
+        carregar()
+    }
+
+    private fun carregar() {
+        viewModelScope.launch {
+            val pontoEncontrado = pontosRepo.ponto(pontoId)
+            if (pontoEncontrado == null) {
+                _estado.value = PontoDetalheEstado(
+                    carregando = false,
+                    naoEncontrado = true,
+                )
+            } else {
+                _estado.value = PontoDetalheEstado(
+                    carregando = false,
+                    ponto = pontoEncontrado,
+                    naoEncontrado = false,
+                    urlDaRota = urlDaRota(pontoEncontrado.latitude, pontoEncontrado.longitude),
+                )
+            }
+        }
+    }
+}
