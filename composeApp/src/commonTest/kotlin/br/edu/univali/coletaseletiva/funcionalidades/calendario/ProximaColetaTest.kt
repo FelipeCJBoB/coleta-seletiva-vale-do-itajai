@@ -1,20 +1,51 @@
+
 package br.edu.univali.coletaseletiva.funcionalidades.calendario
 
-// ======================================================================
-// ARQUIVO-ESQUELETO · Integrante 2 · Cartão PB08 · arquivo 4 de 16
-// Testes da regra principal (casos 1 a 5). ESCREVA ANTES.
-//
-// PASSO A PASSO (troque [ ] por [x] quando terminar; no fim, apague este bloco
-// e deixe só comentários úteis):
-//   [ ] 1. Um teste por linha abaixo. Use LocalDate(2026, 10, 23) etc. e assertEquals.
-//
-// TESTES A ESCREVER (um @Test por linha; escreva ANTES do código = TDD):
-//   [ ] dia_normal_proxima_e_a_segunda
-//   [ ] hoje_e_dia_de_coleta_vale_hoje
-//   [ ] feriado_empurra_para_o_proximo_dia_util
-//   [ ] sexta_feira_santa_empurra_para_segunda
-//   [ ] dois_dias_na_semana_escolhe_o_mais_proximo
-//
-// Requisitos: RF03, RN01, RN02, RN03, CU02  ·  Receitas: docs/RECEITAS.md  ·  Bíblia:
-//        docs/guias/integrante-2.md
-// ======================================================================
+import kotlinx.datetime.DayOfWeek
+import kotlinx.datetime.LocalDate
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
+
+class ProximaColetaTest {
+
+    @Test
+    fun retorna_hoje_quando_hoje_e_dia_de_coleta() {
+        val resultado = proximaColeta(
+            hoje = LocalDate(2026, 10, 26),
+            diasDaSemana = setOf(DayOfWeek.MONDAY)
+        )
+
+        assertEquals(LocalDate(2026, 10, 26), resultado)
+    }
+
+    @Test
+    fun procura_o_proximo_dia_programado() {
+        val resultado = proximaColeta(
+            hoje = LocalDate(2026, 10, 24),
+            diasDaSemana = setOf(DayOfWeek.MONDAY)
+        )
+
+        assertEquals(LocalDate(2026, 10, 26), resultado)
+    }
+
+    @Test
+    fun feriado_em_dia_de_coleta_passa_para_o_proximo_dia_util() {
+        val resultado = proximaColeta(
+            hoje = LocalDate(2026, 11, 20),
+            diasDaSemana = setOf(DayOfWeek.FRIDAY)
+        )
+
+        assertEquals(LocalDate(2026, 11, 23), resultado)
+    }
+
+    @Test
+    fun exige_pelo_menos_um_dia_de_coleta() {
+        assertFailsWith<IllegalArgumentException> {
+            proximaColeta(
+                hoje = LocalDate(2026, 10, 24),
+                diasDaSemana = emptySet()
+            )
+        }
+    }
+}

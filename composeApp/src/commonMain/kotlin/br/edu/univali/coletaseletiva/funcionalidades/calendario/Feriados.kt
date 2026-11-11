@@ -1,17 +1,31 @@
+
 package br.edu.univali.coletaseletiva.funcionalidades.calendario
 
-// ======================================================================
-// ARQUIVO-ESQUELETO · Integrante 2 · Cartão PB08 · arquivo 3 de 16
-// Regra RN03: quais datas são feriado nacional.
-//
-// PASSO A PASSO (troque [ ] por [x] quando terminar; no fim, apague este bloco
-// e deixe só comentários úteis):
-//   [ ] 1. Crie a função `ehFeriadoNacional(data: LocalDate): Boolean`.
-//   [ ] 2. Guarde as datas fixas (mês e dia) em um conjunto e a Sexta-feira Santa de 2026
-//          e 2027 em outro conjunto de LocalDate (a Páscoa muda todo ano; só precisamos de
-//          2026 e 2027 e vamos escrever isso num comentário).
-//   [ ] 3. Receita: R1 e R11.
-//
-// Requisitos: RF03, RN01, RN02, RN03, CU02  ·  Receitas: docs/RECEITAS.md  ·  Bíblia:
-//        docs/guias/integrante-2.md
-// ======================================================================
+import kotlinx.datetime.LocalDate
+
+private val feriadosFixos = setOf(
+    1 to 1,
+    4 to 21,
+    5 to 1,
+    9 to 7,
+    10 to 12,
+    11 to 2,
+    11 to 15,
+    11 to 20,
+    12 to 25
+)
+
+private val sextasFeirasSantas = setOf(
+    LocalDate(2026, 4, 3),
+    LocalDate(2027, 3, 26)
+)
+
+/**
+ * Identifica os feriados nacionais previstos para 2026 e 2027.
+ */
+fun ehFeriadoNacional(data: LocalDate): Boolean {
+    val dataFixa = data.month.ordinal + 1 to data.day
+
+    return dataFixa in feriadosFixos ||
+            data in sextasFeirasSantas
+}
