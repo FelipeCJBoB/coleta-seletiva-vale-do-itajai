@@ -4,14 +4,14 @@ Uma linha por Pull Request mergeado. Mantida pelo Integrante 1. Os prints ficam 
 
 | PR | Cartão | Integrante | Commit `test:` (hash + mensagem) | Commit `feat:` (hash + mensagem) | CI vermelho (arquivo) | CI verde (arquivo) |
 |---|---|---|---|---|---|---|
-| | PB06b | 5 | | | | |
-| | PB07 | 2 | | | | |
-| | PB07b | 2 | | | | |
-| | PB08 | 2 | | | | |
+| #2 | PB06b | 5 | `1b67061` | `67b6c62` | [vermelho](https://github.com/FelipeCJBoB/coleta-seletiva-vale-do-itajai/actions/runs/39866859072) | [verde](https://github.com/FelipeCJBoB/coleta-seletiva-vale-do-itajai/actions/runs/39703777213) |
+| #4 | PB07 | 1 (com Claude) | `ce9f572`, `e407d0b`, `03711b1` | `5c4d798`, `e217ad9`, `51038ab` | ver tabela abaixo | ver tabela abaixo |
+| #5 | PB07b | 1 (com Claude) | `e721f7c`, `11dfcea` | `2ac8828`, `656d0d4` | ver tabela abaixo | ver tabela abaixo |
+| #8 (aberto) | PB08 | 2 | sem commit `test:` separado (testes no mesmo commit) | `dc48dd5` | — | [verde](https://github.com/FelipeCJBoB/coleta-seletiva-vale-do-itajai/actions/runs/42398077579) |
 | | PB12 | 2 | | | | |
-| | PB09 | 3 | | | | |
-| | PB10 | 3 | | | | |
-| | PB17 | 3 | | | | |
+| #6 | PB09 | 3 | sem commit `test:` separado (testes no mesmo commit) | `c407aa7` | — | [verde](https://github.com/FelipeCJBoB/coleta-seletiva-vale-do-itajai/actions/runs/40202198457) |
+| #6 | PB10 | 3 | sem commit `test:` separado (testes no mesmo commit) | `c407aa7` | — | [verde](https://github.com/FelipeCJBoB/coleta-seletiva-vale-do-itajai/actions/runs/40202198457) |
+| #6 | PB17 | 3 | sem commit `test:` separado (testes no mesmo commit) | `c407aa7` | — | [verde](https://github.com/FelipeCJBoB/coleta-seletiva-vale-do-itajai/actions/runs/40202198457) |
 | | PB11 | 4 | | | | |
 | | PB16 | 5 | | | | |
 
