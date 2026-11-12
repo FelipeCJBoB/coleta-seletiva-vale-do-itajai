@@ -1,18 +1,39 @@
 package br.edu.univali.coletaseletiva.funcionalidades.guia
 
-// ======================================================================
-// ARQUIVO-ESQUELETO · Integrante 4 · Cartão PB11 · arquivo 8 de 13
-// Teste de integridade dos dados (caso 6). ESCREVA ANTES do conteúdo.
-//
-// PASSO A PASSO (troque [ ] por [x] quando terminar; no fim, apague este bloco
-// e deixe só comentários úteis):
-//   [ ] 1. Este teste protege o conteúdo: roda sobre DadosGuiaDemo.
-//
-// TESTES A ESCREVER (um @Test por linha; escreva ANTES do código = TDD):
-//   [ ] tem_pelo_menos_vinte_itens
-//   [ ] ids_sao_unicos
-//   [ ] pilhas_baterias_e_oleo_vao_para_ponto_de_descarte
-//
-// Requisitos: RF08, RN04, RNF03, CU04  ·  Receitas: docs/RECEITAS.md  ·  Bíblia:
-//        docs/guias/integrante-4.md
-// ======================================================================
+import br.edu.univali.coletaseletiva.util.normalizarTexto
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
+
+// PB11 · critério 6: protege o conteúdo do guia (DadosGuiaDemo).
+class DadosGuiaTest {
+
+    private val itens = DadosGuiaDemo.itens
+
+    @Test
+    fun tem_pelo_menos_vinte_itens() {
+        assertTrue(itens.size >= 20, "O guia tem ${itens.size} itens; o mínimo é 20.")
+        itens.forEach { item ->
+            assertTrue(item.nome.isNotBlank(), "Item ${item.id} sem nome.")
+            assertTrue(item.orientacao.isNotBlank(), "Item ${item.id} sem orientação.")
+        }
+    }
+
+    @Test
+    fun ids_sao_unicos() {
+        val repetidos = itens.groupBy { it.id }.filterValues { it.size > 1 }.keys
+        assertEquals(emptySet(), repetidos, "Ids repetidos no guia.")
+    }
+
+    @Test
+    fun pilhas_baterias_e_oleo_vao_para_ponto_de_descarte() {
+        // RN04: nunca vão para a coleta porta a porta.
+        for (palavra in listOf("pilha", "bateria", "oleo")) {
+            val doTipo = itens.filter { palavra in normalizarTexto(it.nome) }
+            assertTrue(doTipo.isNotEmpty(), "O guia precisa ter um item de '$palavra'.")
+            doTipo.forEach { item ->
+                assertEquals(Destino.PONTO_DE_DESCARTE, item.destino, "'${item.nome}' deve ir para ponto de descarte.")
+            }
+        }
+    }
+}
