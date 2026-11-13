@@ -60,7 +60,9 @@ class AppContainer(
 
     // ===== INTEGRANTE 4 (PB11): guia de separação =====
     // início
-
+    val guiaRepositorio: br.edu.univali.coletaseletiva.funcionalidades.guia.GuiaRepositorio by lazy {
+        br.edu.univali.coletaseletiva.funcionalidades.guia.GuiaRepositorioEmMemoria()
+    }
     // fim
 
 
