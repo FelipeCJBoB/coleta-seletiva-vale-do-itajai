@@ -12,7 +12,7 @@ Uma linha por Pull Request mergeado. Mantida pelo Integrante 1. Os prints ficam 
 | #6 | PB09 | 3 | sem commit `test:` separado (testes no mesmo commit) | `c407aa7` | — | [verde](https://github.com/FelipeCJBoB/coleta-seletiva-vale-do-itajai/actions/runs/40202198457) |
 | #6 | PB10 | 3 | sem commit `test:` separado (testes no mesmo commit) | `c407aa7` | — | [verde](https://github.com/FelipeCJBoB/coleta-seletiva-vale-do-itajai/actions/runs/40202198457) |
 | #6 | PB17 | 3 | sem commit `test:` separado (testes no mesmo commit) | `c407aa7` | — | [verde](https://github.com/FelipeCJBoB/coleta-seletiva-vale-do-itajai/actions/runs/40202198457) |
-| | PB11 | 4 | | | | |
+| #9 (aberto) | PB11 | 4 (João Gabriel) | `1e74cc4`, `a4f28cb`, `80ae458`, `233e1fe`, `41d985a`, `3636234` | `e2330b8`, `c2b625a`, `e5b10d9`, `0f40ac8`, `9125462`, `4e92ad3` | ver tabela abaixo | ver tabela abaixo |
 | | PB16 | 5 | | | | |
 
 ## Registradas (CI = job de testes JVM; vermelho = não compilou/falhou, verde = passou)
@@ -25,6 +25,12 @@ Uma linha por Pull Request mergeado. Mantida pelo Integrante 1. Os prints ficam 
 | #4 | PB07 | 1 (com Claude) | `03711b1` test: tela de escolher local | [vermelho](https://github.com/FelipeCJBoB/coleta-seletiva-vale-do-itajai/actions/runs/39864773574) | `51038ab` feat: tela, escopo de ViewModel e ligação no app | [verde](https://github.com/FelipeCJBoB/coleta-seletiva-vale-do-itajai/actions/runs/39865630038) |
 | #5 | PB07b | 1 (com Claude) | `e721f7c` test: ViewModel da tela Início | [vermelho](https://github.com/FelipeCJBoB/coleta-seletiva-vale-do-itajai/actions/runs/39865809390) | `2ac8828` feat: ViewModel e tema | [verde](https://github.com/FelipeCJBoB/coleta-seletiva-vale-do-itajai/actions/runs/39865944144) |
 | #5 | PB07b | 1 (com Claude) | `11dfcea` test: tela Início | [vermelho](https://github.com/FelipeCJBoB/coleta-seletiva-vale-do-itajai/actions/runs/39866066636) | `656d0d4` feat: tela, tema aplicado e ícone | [verde](https://github.com/FelipeCJBoB/coleta-seletiva-vale-do-itajai/actions/runs/39866716580) |
+| #9 (aberto) | PB11 | 4 (João Gabriel) | `1e74cc4` test: normalizar texto para busca | [vermelho](https://github.com/FelipeCJBoB/coleta-seletiva-vale-do-itajai/actions/runs/43316572182) | `e2330b8` feat: normalizar texto | [verde](https://github.com/FelipeCJBoB/coleta-seletiva-vale-do-itajai/actions/runs/43317027710) |
+| #9 (aberto) | PB11 | 4 (João Gabriel) | `a4f28cb` test: busca no guia | [vermelho](https://github.com/FelipeCJBoB/coleta-seletiva-vale-do-itajai/actions/runs/43326143518) | `c2b625a` feat: modelos do guia e busca | [verde](https://github.com/FelipeCJBoB/coleta-seletiva-vale-do-itajai/actions/runs/43326939893) |
+| #9 (aberto) | PB11 | 4 (João Gabriel) | `80ae458` test: integridade dos dados do guia | [vermelho](https://github.com/FelipeCJBoB/coleta-seletiva-vale-do-itajai/actions/runs/43329529364) | `e5b10d9` feat: conteúdo do guia (27 itens) | [verde](https://github.com/FelipeCJBoB/coleta-seletiva-vale-do-itajai/actions/runs/43330231884) |
+| #9 (aberto) | PB11 | 4 (João Gabriel) | `233e1fe` test: ViewModel do guia | [vermelho](https://github.com/FelipeCJBoB/coleta-seletiva-vale-do-itajai/actions/runs/43336215008) | `0f40ac8` feat: repositório e ViewModels | [verde](https://github.com/FelipeCJBoB/coleta-seletiva-vale-do-itajai/actions/runs/43337194073) |
+| #9 (aberto) | PB11 | 4 (João Gabriel) | `41d985a` test: tela do guia | [vermelho](https://github.com/FelipeCJBoB/coleta-seletiva-vale-do-itajai/actions/runs/43338227926) | `9125462` feat: telas do guia ligadas na navegação | [verde](https://github.com/FelipeCJBoB/coleta-seletiva-vale-do-itajai/actions/runs/43339664885) |
+| #9 (aberto, revisão) | PB11 | 4 (João Gabriel) | `3636234` test: orientações gerais sem destino de coleta | [vermelho](https://github.com/FelipeCJBoB/coleta-seletiva-vale-do-itajai/actions/runs/43727495339) | `4e92ad3` feat: destino "Orientação geral" | [verde](https://github.com/FelipeCJBoB/coleta-seletiva-vale-do-itajai/actions/runs/43727513087) |
 
 Os links levam à execução no GitHub Actions (aba Actions). Para o relatório (5.1.4), tire print das duas execuções do mesmo cartão e salve em `docs/evidencias/`.
 
