@@ -2,6 +2,7 @@ package br.edu.univali.coletaseletiva.funcionalidades.guia
 
 import br.edu.univali.coletaseletiva.funcionalidades.guia.Destino.COLETA_COMUM
 import br.edu.univali.coletaseletiva.funcionalidades.guia.Destino.COLETA_SELETIVA
+import br.edu.univali.coletaseletiva.funcionalidades.guia.Destino.ORIENTACAO_GERAL
 import br.edu.univali.coletaseletiva.funcionalidades.guia.Destino.PONTO_DE_DESCARTE
 
 /**
@@ -203,14 +204,14 @@ object DadosGuiaDemo {
         GuiaItem(
             id = 26L,
             nome = "Quem separa o lixo",
-            destino = COLETA_SELETIVA,
+            destino = ORIENTACAO_GERAL,
             orientacao = "A separação começa em casa: cada morador separa os recicláveis secos do lixo orgânico e dos rejeitos antes da coleta.",
             sinonimos = listOf("separação", "responsabilidade", "como separar"),
         ),
         GuiaItem(
             id = 27L,
             nome = "Quando colocar na calçada",
-            destino = COLETA_SELETIVA,
+            destino = ORIENTACAO_GERAL,
             orientacao = "Coloque o lixo na calçada só no dia da coleta do seu setor (veja o Calendário) e siga o horário informado pela prefeitura. Evite deixar de um dia para o outro.",
             sinonimos = listOf("horário", "calçada", "dia da coleta", "quando colocar o lixo"),
         ),

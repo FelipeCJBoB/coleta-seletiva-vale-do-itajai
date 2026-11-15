@@ -5,6 +5,7 @@ enum class Destino(val nomeExibicao: String) {
     COLETA_SELETIVA("Coleta seletiva"),
     COLETA_COMUM("Coleta comum"),
     PONTO_DE_DESCARTE("Ponto de descarte"),
+    ORIENTACAO_GERAL("Orientação geral"),
 }
 
 /** Um item do guia de separação: conteúdo estático, funciona sem internet (RNF03). */
