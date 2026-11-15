@@ -36,4 +36,13 @@ class DadosGuiaTest {
             }
         }
     }
+
+    @Test
+    fun orientacoes_gerais_nao_mostram_destino_de_coleta() {
+        // Itens que não são resíduos (regras gerais) não podem aparecer como "Coleta seletiva".
+        for (nome in listOf("Quem separa o lixo", "Quando colocar na calçada")) {
+            val item = itens.first { it.nome == nome }
+            assertEquals(Destino.ORIENTACAO_GERAL, item.destino, "'$nome' deve ser orientação geral.")
+        }
+    }
 }
