@@ -1,19 +1,41 @@
 package br.edu.univali.coletaseletiva.funcionalidades.pontuacao
 
-// ======================================================================
-// ARQUIVO-ESQUELETO · Integrante 5 · Cartão PB16 · arquivo 7 de 17
-// Teste com Mockito (caso 8).
-//
-// PASSO A PASSO (troque [ ] por [x] quando terminar; no fim, apague este bloco
-// e deixe só comentários úteis):
-//   [ ] 1. Com mock<DescarteRepositorio>() e verify(...).inserir(...): registro válido
-//          chama inserir exatamente uma vez; LimiteAtingido nunca chama inserir (verify
-//          never). Receita R10.
-//
-// TESTES A ESCREVER (um @Test por linha; escreva ANTES do código = TDD):
-//   [ ] registro_valido_chama_inserir_uma_vez
-//   [ ] limite_atingido_nunca_chama_inserir
-//
-// Requisitos: RF09, RF10, RN08, RN09, CU06, CU07  ·  Receitas: docs/RECEITAS.md  ·
-//        Bíblia: docs/guias/integrante-5.md
-// ======================================================================
+import br.edu.univali.coletaseletiva.funcionalidades.pontos.Material
+import br.edu.univali.coletaseletiva.util.RelogioFixo
+import kotlinx.coroutines.test.runTest
+import kotlinx.datetime.LocalDate
+import org.mockito.kotlin.any
+import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.never
+import org.mockito.kotlin.times
+import org.mockito.kotlin.verify
+import kotlin.test.Test
+
+// PB16 · critério 8: o repositório é chamado exatamente uma vez num registro válido (R10).
+class RegistrarDescarteMockitoTest {
+
+    private val relogio = RelogioFixo(LocalDate(2026, 11, 16))
+
+    @Test
+    fun registro_valido_chama_inserir_uma_vez() = runTest {
+        val repo = mock<DescarteRepositorio> {
+            onBlocking { contarNaData(any()) } doReturn 0
+        }
+
+        RegistrarDescarte(repo, relogio)(Material.PLASTICO)
+
+        verify(repo, times(1)).inserir(any())
+    }
+
+    @Test
+    fun limite_atingido_nunca_chama_inserir() = runTest {
+        val repo = mock<DescarteRepositorio> {
+            onBlocking { contarNaData(any()) } doReturn 3
+        }
+
+        RegistrarDescarte(repo, relogio)(Material.PLASTICO)
+
+        verify(repo, never()).inserir(any())
+    }
+}

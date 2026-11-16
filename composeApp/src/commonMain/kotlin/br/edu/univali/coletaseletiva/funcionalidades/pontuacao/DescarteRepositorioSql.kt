@@ -1,14 +1,37 @@
 package br.edu.univali.coletaseletiva.funcionalidades.pontuacao
 
-// ======================================================================
-// ARQUIVO-ESQUELETO · Integrante 5 · Cartão PB16 · arquivo 15 de 17
-// Repositório SQL.
-//
-// PASSO A PASSO (troque [ ] por [x] quando terminar; no fim, apague este bloco
-// e deixe só comentários úteis):
-//   [ ] 1. Converta material (texto) em Material com Material.valueOf e a data (texto
-//          AAAA-MM-DD) com LocalDate.parse (R7).
-//
-// Requisitos: RF09, RF10, RN08, RN09, CU06, CU07  ·  Receitas: docs/RECEITAS.md  ·
-//        Bíblia: docs/guias/integrante-5.md
-// ======================================================================
+import br.edu.univali.coletaseletiva.dados.Banco
+import br.edu.univali.coletaseletiva.funcionalidades.pontos.Material
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import kotlinx.datetime.LocalDate
+
+/** Guarda os descartes no banco local (RN07). A data vai como texto AAAA-MM-DD e o material como o nome do enum. */
+class DescarteRepositorioSql(private val banco: Banco) : DescarteRepositorio {
+
+    private val queries get() = banco.descarteQueries
+
+    override suspend fun inserir(descarte: Descarte): Unit = withContext(Dispatchers.Default) {
+        queries.inserirDescarte(descarte.material.name, descarte.pontos.toLong(), descarte.data.toString())
+        Unit
+    }
+
+    override suspend fun listarMaisRecentesPrimeiro(): List<Descarte> = withContext(Dispatchers.Default) {
+        queries.listarDescartesRecentesPrimeiro().executeAsList().map {
+            Descarte(
+                id = it.id,
+                material = Material.valueOf(it.material),
+                pontos = it.pontos.toInt(),
+                data = LocalDate.parse(it.data_),
+            )
+        }
+    }
+
+    override suspend fun contarNaData(data: LocalDate): Int = withContext(Dispatchers.Default) {
+        queries.contarDescartesNaData(data.toString()).executeAsOne().toInt()
+    }
+
+    override suspend fun somarPontos(): Int = withContext(Dispatchers.Default) {
+        queries.somarPontos().executeAsOne().toInt()
+    }
+}

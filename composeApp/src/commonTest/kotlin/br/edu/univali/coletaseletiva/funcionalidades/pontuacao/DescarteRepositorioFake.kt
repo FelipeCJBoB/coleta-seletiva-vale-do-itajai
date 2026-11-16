@@ -1,13 +1,21 @@
 package br.edu.univali.coletaseletiva.funcionalidades.pontuacao
 
-// ======================================================================
-// ARQUIVO-ESQUELETO · Integrante 5 · Cartão PB16 · arquivo 5 de 17
-// Fake em memória.
-//
-// PASSO A PASSO (troque [ ] por [x] quando terminar; no fim, apague este bloco
-// e deixe só comentários úteis):
-//   [ ] 1. Guarda uma lista; implementa as 4 funções (R2).
-//
-// Requisitos: RF09, RF10, RN08, RN09, CU06, CU07  ·  Receitas: docs/RECEITAS.md  ·
-//        Bíblia: docs/guias/integrante-5.md
-// ======================================================================
+import kotlinx.datetime.LocalDate
+
+/** Repositório de mentira para os testes: guarda os descartes numa lista em memória. */
+class DescarteRepositorioFake(inicial: List<Descarte> = emptyList()) : DescarteRepositorio {
+
+    val guardados = inicial.toMutableList()
+
+    override suspend fun inserir(descarte: Descarte) {
+        guardados += descarte.copy(id = guardados.size + 1L)
+    }
+
+    // Do mais recente para o mais antigo (empate na data: o inserido por último vem primeiro).
+    override suspend fun listarMaisRecentesPrimeiro(): List<Descarte> =
+        guardados.sortedWith(compareByDescending<Descarte> { it.data }.thenByDescending { it.id })
+
+    override suspend fun contarNaData(data: LocalDate): Int = guardados.count { it.data == data }
+
+    override suspend fun somarPontos(): Int = guardados.sumOf { it.pontos }
+}

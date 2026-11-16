@@ -1,14 +1,31 @@
 package br.edu.univali.coletaseletiva.funcionalidades.pontuacao
 
-// ======================================================================
-// ARQUIVO-ESQUELETO · Integrante 5 · Cartão PB16 · arquivo 10 de 17
-// Saldo e histórico.
-//
-// PASSO A PASSO (troque [ ] por [x] quando terminar; no fim, apague este bloco
-// e deixe só comentários úteis):
-//   [ ] 1. `MeusPontosEstado`: carregando, saldo, historico. `MeusPontosViewModel(repo)`
-//          (R3).
-//
-// Requisitos: RF09, RF10, RN08, RN09, CU06, CU07  ·  Receitas: docs/RECEITAS.md  ·
-//        Bíblia: docs/guias/integrante-5.md
-// ======================================================================
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+
+/** Saldo e histórico da tela "Meus pontos" (RF10). O histórico vem do mais recente para o mais antigo. */
+data class MeusPontosEstado(
+    val carregando: Boolean = true,
+    val saldo: Int = 0,
+    val historico: List<Descarte> = emptyList(),
+)
+
+class MeusPontosViewModel(private val repo: DescarteRepositorio) : ViewModel() {
+
+    private val _estado = MutableStateFlow(MeusPontosEstado())
+    val estado: StateFlow<MeusPontosEstado> = _estado.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            _estado.value = MeusPontosEstado(
+                carregando = false,
+                saldo = repo.somarPontos(),
+                historico = repo.listarMaisRecentesPrimeiro(),
+            )
+        }
+    }
+}

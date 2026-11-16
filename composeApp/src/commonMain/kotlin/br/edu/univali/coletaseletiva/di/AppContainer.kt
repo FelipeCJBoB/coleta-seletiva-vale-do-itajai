@@ -68,7 +68,12 @@ class AppContainer(
 
     // ===== INTEGRANTE 5 (PB16): pontuação =====
     // início
-
+    val descarteRepositorio: br.edu.univali.coletaseletiva.funcionalidades.pontuacao.DescarteRepositorio by lazy {
+        br.edu.univali.coletaseletiva.funcionalidades.pontuacao.DescarteRepositorioSql(banco)
+    }
+    val registrarDescarte: br.edu.univali.coletaseletiva.funcionalidades.pontuacao.RegistrarDescarte by lazy {
+        br.edu.univali.coletaseletiva.funcionalidades.pontuacao.RegistrarDescarte(descarteRepositorio, relogio)
+    }
     // fim
 
 
