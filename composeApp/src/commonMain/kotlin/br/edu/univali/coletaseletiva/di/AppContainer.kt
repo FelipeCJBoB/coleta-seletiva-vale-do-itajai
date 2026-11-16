@@ -19,6 +19,8 @@ import br.edu.univali.coletaseletiva.util.RelogioDoSistema
 class AppContainer(
     val driverFactory: DriverFactory,
     val relogio: Relogio = RelogioDoSistema,
+    val agendador: br.edu.univali.coletaseletiva.funcionalidades.lembrete.AgendadorDeLembrete =
+        br.edu.univali.coletaseletiva.funcionalidades.lembrete.AgendadorNulo,
 ) {
 
     /**

@@ -80,7 +80,7 @@ fun AppNavegacao(navegador: Navegador) {
 
             // ===== INTEGRANTE 2 (PB12): Lembrete =====
             Rota.Lembrete -> {
-                TelaEmConstrucao("Lembrete", navegador)
+                br.edu.univali.coletaseletiva.funcionalidades.lembrete.LembreteRota(navegador)
             }
 
         }

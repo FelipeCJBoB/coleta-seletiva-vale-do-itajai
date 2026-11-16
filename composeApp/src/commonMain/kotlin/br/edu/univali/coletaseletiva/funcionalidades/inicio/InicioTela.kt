@@ -57,6 +57,7 @@ fun InicioTela(estado: InicioEstado, onIr: (Rota) -> Unit) {
         Atalho("Guia de separação") { onIr(Rota.Guia) }
         Atalho("Meus pontos") { onIr(Rota.MeusPontos) }
         Atalho("Dicas") { onIr(Rota.Dicas) }
+        Atalho("Lembrete da coleta") { onIr(Rota.Lembrete) }
 
         Spacer(Modifier.height(8.dp))
         Text(
