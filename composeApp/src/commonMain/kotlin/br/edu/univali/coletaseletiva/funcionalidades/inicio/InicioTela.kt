@@ -21,7 +21,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -111,7 +110,7 @@ private fun Topo(estado: InicioEstado, onIr: (Rota) -> Unit) {
             )
             TextButton(
                 onClick = { onIr(Rota.EscolherLocal) },
-                colors = TextButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onPrimary),
+                colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onPrimary),
             ) { Text("Trocar local") }
         } else if (estado.precisaEscolherLocal) {
             Text(

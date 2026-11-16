@@ -26,6 +26,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import br.edu.univali.coletaseletiva.di.LocalContainer
 import br.edu.univali.coletaseletiva.navegacao.Navegador
+import br.edu.univali.coletaseletiva.ui.BarraDeTopo
+import br.edu.univali.coletaseletiva.ui.Selo
 
 @Composable
 fun DicasRota(navegador: Navegador) {
@@ -44,27 +46,13 @@ fun DicasTela(
     estado: DicasEstado,
     onVoltar: () -> Unit,
 ) {
+    Column(Modifier.fillMaxSize()) {
+    BarraDeTopo("Dicas de reciclagem", onVoltar)
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Text(
-                text = "Dicas de reciclagem",
-                style = MaterialTheme.typography.headlineMedium,
-            )
-            TextButton(onClick = onVoltar) {
-                Text("Voltar")
-            }
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
         if (estado.carregando) {
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -124,21 +112,30 @@ fun DicasTela(
             items(estado.dicas) { dica ->
                 Card(
                     modifier = Modifier.fillMaxWidth(),
+                    colors = CardDefaults.cardColors(containerColor = androidx.compose.ui.graphics.Color.White),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
                 ) {
-                    Column(modifier = Modifier.padding(12.dp)) {
-                        Text(
-                            text = dica.titulo,
-                            style = MaterialTheme.typography.titleSmall,
-                            fontWeight = FontWeight.Bold,
-                        )
-                        Spacer(modifier = Modifier.height(4.dp))
-                        Text(
-                            text = dica.texto,
-                            style = MaterialTheme.typography.bodySmall,
-                        )
+                    Row(
+                        modifier = Modifier.padding(12.dp),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    ) {
+                        Selo(emoji = "🌿", tamanho = 40.dp)
+                        Column {
+                            Text(
+                                text = dica.titulo,
+                                style = MaterialTheme.typography.titleSmall,
+                                fontWeight = FontWeight.Bold,
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(
+                                text = dica.texto,
+                                style = MaterialTheme.typography.bodySmall,
+                            )
+                        }
                     }
                 }
             }
         }
+    }
     }
 }
