@@ -11,8 +11,9 @@ class DescarteRepositorioSql(private val banco: Banco) : DescarteRepositorio {
 
     private val queries get() = banco.descarteQueries
 
-    override suspend fun inserir(descarte: Descarte) = withContext(Dispatchers.Default) {
+    override suspend fun inserir(descarte: Descarte): Unit = withContext(Dispatchers.Default) {
         queries.inserirDescarte(descarte.material.name, descarte.pontos.toLong(), descarte.data.toString())
+        Unit
     }
 
     override suspend fun listarMaisRecentesPrimeiro(): List<Descarte> = withContext(Dispatchers.Default) {
@@ -21,7 +22,7 @@ class DescarteRepositorioSql(private val banco: Banco) : DescarteRepositorio {
                 id = it.id,
                 material = Material.valueOf(it.material),
                 pontos = it.pontos.toInt(),
-                data = LocalDate.parse(it.data),
+                data = LocalDate.parse(it.data_),
             )
         }
     }
