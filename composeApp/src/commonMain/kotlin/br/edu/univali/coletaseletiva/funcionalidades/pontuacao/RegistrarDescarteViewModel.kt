@@ -1,18 +1,37 @@
 package br.edu.univali.coletaseletiva.funcionalidades.pontuacao
 
-// ======================================================================
-// ARQUIVO-ESQUELETO · Integrante 5 · Cartão PB16 · arquivo 11 de 17
-// Registro.
-//
-// PASSO A PASSO (troque [ ] por [x] quando terminar; no fim, apague este bloco
-// e deixe só comentários úteis):
-//   [ ] 1. `RegistrarEstado`: materiaisDisponiveis (todos os Material que pontuam),
-//          mensagem (texto do último resultado), registrando.
-//          `RegistrarDescarteViewModel(registrar: RegistrarDescarte)`:
-//          `registrar(material)` chama o caso de uso e transforma o ResultadoRegistro em
-//          mensagem: 'Você ganhou N pontos!' / 'Limite de 3 descartes por hoje atingido' /
-//          'Esse material não gera pontos'.
-//
-// Requisitos: RF09, RF10, RN08, RN09, CU06, CU07  ·  Receitas: docs/RECEITAS.md  ·
-//        Bíblia: docs/guias/integrante-5.md
-// ======================================================================
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import br.edu.univali.coletaseletiva.funcionalidades.pontos.Material
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+
+/** Estado da tela "Registrar descarte": só os materiais que pontuam são oferecidos (roupas ficam de fora, D-07). */
+data class RegistrarEstado(
+    val materiaisDisponiveis: List<Material> = Material.entries.filter { pontosPorMaterial(it) != null },
+    val mensagem: String? = null,
+    val registrando: Boolean = false,
+)
+
+class RegistrarDescarteViewModel(private val registrar: RegistrarDescarte) : ViewModel() {
+
+    private val _estado = MutableStateFlow(RegistrarEstado())
+    val estado: StateFlow<RegistrarEstado> = _estado.asStateFlow()
+
+    fun registrar(material: Material) {
+        if (_estado.value.registrando) return
+        _estado.value = _estado.value.copy(registrando = true)
+        viewModelScope.launch {
+            val resultado = registrar(material)
+            _estado.value = _estado.value.copy(registrando = false, mensagem = resultado.paraMensagem())
+        }
+    }
+}
+
+private fun ResultadoRegistro.paraMensagem(): String = when (this) {
+    is ResultadoRegistro.Sucesso -> "Você ganhou $pontos pontos!"
+    ResultadoRegistro.LimiteAtingido -> "Limite de $LIMITE_DIARIO descartes por hoje atingido"
+    ResultadoRegistro.MaterialNaoPontua -> "Esse material não gera pontos"
+}
