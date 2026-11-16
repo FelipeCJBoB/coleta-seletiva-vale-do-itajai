@@ -15,7 +15,7 @@ data class RegistrarEstado(
     val registrando: Boolean = false,
 )
 
-class RegistrarDescarteViewModel(private val registrar: RegistrarDescarte) : ViewModel() {
+class RegistrarDescarteViewModel(private val registrarDescarte: RegistrarDescarte) : ViewModel() {
 
     private val _estado = MutableStateFlow(RegistrarEstado())
     val estado: StateFlow<RegistrarEstado> = _estado.asStateFlow()
@@ -24,7 +24,7 @@ class RegistrarDescarteViewModel(private val registrar: RegistrarDescarte) : Vie
         if (_estado.value.registrando) return
         _estado.value = _estado.value.copy(registrando = true)
         viewModelScope.launch {
-            val resultado = registrar(material)
+            val resultado = registrarDescarte(material)
             _estado.value = _estado.value.copy(registrando = false, mensagem = resultado.paraMensagem())
         }
     }
