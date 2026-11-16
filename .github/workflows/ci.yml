@@ -78,7 +78,10 @@ jobs:
         with:
           api-level: 34
           arch: x86_64
-          script: ./gradlew connectedDebugAndroidTest --stacktrace
+          script: |
+            ./gradlew connectedDebugAndroidTest -Pandroid.injected.androidTest.leaveApksInstalledAfterRun=true --stacktrace
+            mkdir -p prints
+            adb pull /sdcard/Android/data/br.edu.univali.coletaseletiva/files/prints/. prints/
       - name: Relatório dos testes de interface
         if: always()
         uses: actions/upload-artifact@v4
