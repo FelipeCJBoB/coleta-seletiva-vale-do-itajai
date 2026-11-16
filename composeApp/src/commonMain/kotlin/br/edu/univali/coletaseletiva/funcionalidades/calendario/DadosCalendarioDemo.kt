@@ -1,15 +1,41 @@
 package br.edu.univali.coletaseletiva.funcionalidades.calendario
 
-// ======================================================================
-// ARQUIVO-ESQUELETO · Integrante 2 · Cartão PB08 · arquivo 15 de 16
-// Dias de coleta de demonstração (fictícios).
-//
-// PASSO A PASSO (troque [ ] por [x] quando terminar; no fim, apague este bloco
-// e deixe só comentários úteis):
-//   [ ] 1. Para cada um dos 6 setores (ids no DadosLocalDemo), defina 1 dia de coleta
-//          seletiva e 1 ou 2 dias de coleta comum, entre segunda e sexta. São dados de
-//          demonstração: escreva isso no comentário. NÃO coloque horário.
-//
-// Requisitos: RF03, RN01, RN02, RN03, CU02  ·  Receitas: docs/RECEITAS.md  ·  Bíblia:
-//        docs/guias/integrante-2.md
-// ======================================================================
+import kotlinx.datetime.DayOfWeek.FRIDAY
+import kotlinx.datetime.DayOfWeek.MONDAY
+import kotlinx.datetime.DayOfWeek.THURSDAY
+import kotlinx.datetime.DayOfWeek.TUESDAY
+import kotlinx.datetime.DayOfWeek.WEDNESDAY
+
+/**
+ * Dias de coleta FICTÍCIOS, só para demonstrar o app (não são os dias reais da prefeitura).
+ * Um conjunto por setor do DadosLocalDemo (ids 1 a 6), sempre de segunda a sexta e sem horário (RN01).
+ */
+object DadosCalendarioDemo {
+
+    val coletasPorSetor: Map<Long, List<ColetaDoSetor>> = mapOf(
+        1L to listOf( // Itajaí · Centro
+            ColetaDoSetor(TipoColeta.SELETIVA, setOf(TUESDAY)),
+            ColetaDoSetor(TipoColeta.COMUM, setOf(MONDAY, THURSDAY)),
+        ),
+        2L to listOf( // Itajaí · São Vicente
+            ColetaDoSetor(TipoColeta.SELETIVA, setOf(WEDNESDAY)),
+            ColetaDoSetor(TipoColeta.COMUM, setOf(TUESDAY, FRIDAY)),
+        ),
+        3L to listOf( // Itajaí · Fazenda
+            ColetaDoSetor(TipoColeta.SELETIVA, setOf(THURSDAY)),
+            ColetaDoSetor(TipoColeta.COMUM, setOf(MONDAY, WEDNESDAY)),
+        ),
+        4L to listOf( // Camboriú · Centro (seletiva na segunda: bom para conferir feriado, como 07/09)
+            ColetaDoSetor(TipoColeta.SELETIVA, setOf(MONDAY)),
+            ColetaDoSetor(TipoColeta.COMUM, setOf(TUESDAY, FRIDAY)),
+        ),
+        5L to listOf( // Camboriú · Monte Alegre
+            ColetaDoSetor(TipoColeta.SELETIVA, setOf(FRIDAY)),
+            ColetaDoSetor(TipoColeta.COMUM, setOf(MONDAY, THURSDAY)),
+        ),
+        6L to listOf( // Camboriú · Tabuleiro
+            ColetaDoSetor(TipoColeta.SELETIVA, setOf(WEDNESDAY)),
+            ColetaDoSetor(TipoColeta.COMUM, setOf(MONDAY, FRIDAY)),
+        ),
+    )
+}
