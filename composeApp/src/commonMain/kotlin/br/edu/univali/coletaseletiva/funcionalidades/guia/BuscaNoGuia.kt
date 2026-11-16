@@ -1,17 +1,18 @@
 package br.edu.univali.coletaseletiva.funcionalidades.guia
 
-// ======================================================================
-// ARQUIVO-ESQUELETO · Integrante 4 · Cartão PB11 · arquivo 5 de 13
-// Regra RF08: buscar no guia.
-//
-// PASSO A PASSO (troque [ ] por [x] quando terminar; no fim, apague este bloco
-// e deixe só comentários úteis):
-//   [ ] 1. `buscarNoGuia(itens: List<GuiaItem>, termo: String): List<GuiaItem>`.
-//   [ ] 2. Ideia: normalize o termo; se vazio, devolva todos em ordem alfabética; senão
-//          separe o termo em palavras e mantenha os itens em que TODAS as palavras estão
-//          no nome ou em algum sinônimo (também normalizados).
-//   [ ] 3. Ordene o resultado por nome.
-//
-// Requisitos: RF08, RN04, RNF03, CU04  ·  Receitas: docs/RECEITAS.md  ·  Bíblia:
-//        docs/guias/integrante-4.md
-// ======================================================================
+import br.edu.univali.coletaseletiva.util.normalizarTexto
+
+/**
+ * RF08: busca no guia de separação.
+ * Termo vazio devolve todos; senão, fica o item em que TODAS as palavras do termo
+ * aparecem no nome ou nos sinônimos. Sem diferença de maiúsculas e acentos.
+ * O resultado sai em ordem alfabética (também sem considerar acentos).
+ */
+fun buscarNoGuia(itens: List<GuiaItem>, termo: String): List<GuiaItem> {
+    val palavras = normalizarTexto(termo).split(" ").filter { it.isNotEmpty() }
+    val encontrados = itens.filter { item ->
+        val textoDoItem = normalizarTexto((listOf(item.nome) + item.sinonimos).joinToString(" "))
+        palavras.all { palavra -> palavra in textoDoItem }
+    }
+    return encontrados.sortedBy { normalizarTexto(it.nome) }
+}

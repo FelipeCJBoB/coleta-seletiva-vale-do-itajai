@@ -50,13 +50,13 @@ fun AppNavegacao(navegador: Navegador) {
 
             // ===== INTEGRANTE 4 (PB11): Guia de separação =====
             Rota.Guia -> {
-                TelaEmConstrucao("Guia de separação", navegador)
+                br.edu.univali.coletaseletiva.funcionalidades.guia.GuiaRota(navegador)
             }
 
 
             // ===== INTEGRANTE 4 (PB11): Detalhe do item do guia =====
             is Rota.GuiaDetalhe -> {
-                TelaEmConstrucao("Detalhe do item do guia", navegador)
+                br.edu.univali.coletaseletiva.funcionalidades.guia.GuiaDetalheRota(rota.itemId, navegador)
             }
 
 
