@@ -30,6 +30,7 @@ class AppContainer(
         // ===== INTEGRANTE 2 (PB07, PB08): dados de demonstração =====
         // início
         localRepositorio.semearSeVazio()
+        calendarioRepositorio.semearSeVazio()
         // fim
 
 
@@ -48,6 +49,9 @@ class AppContainer(
     // ===== INTEGRANTE 2 (PB07, PB08): local e calendário =====
     // início
     val localRepositorio: LocalRepositorioSql by lazy { LocalRepositorioSql(banco) }
+    val calendarioRepositorio: br.edu.univali.coletaseletiva.funcionalidades.calendario.CalendarioRepositorioSql by lazy {
+        br.edu.univali.coletaseletiva.funcionalidades.calendario.CalendarioRepositorioSql(banco)
+    }
     // fim
 
 

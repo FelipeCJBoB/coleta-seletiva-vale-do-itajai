@@ -1,16 +1,19 @@
--- ======================================================================
--- ARQUIVO-ESQUELETO · Integrante 2 · Cartão PB08 · arquivo 12 de 16
--- Dias de coleta por setor.
---
--- PASSO A PASSO (troque [ ] por [x] quando terminar; no fim, apague este bloco
--- e deixe só comentários úteis):
---   [ ] 1. (use CREATE TABLE IF NOT EXISTS, regra D-13) Tabela `coleta_dia`: setor_id (inteiro), tipo (texto: 'SELETIVA' ou 'COMUM'),
---          dia_semana (inteiro 1 a 7, com 1 = segunda). Chave primária composta pelas 3
---          colunas.
---   [ ] 2. Consultas: listarColetasDoSetor(setor_id), inserirColeta(setor_id, tipo,
---          dia_semana), contarColetas.
---   [ ] 3. Receita R6. Faça só depois do PB07 (setores existem).
---
--- Requisitos: RF03, RN01, RN02, RN03, CU02  ·  Receitas: docs/RECEITAS.md  ·  Bíblia:
---        docs/guias/integrante-2.md
--- ======================================================================
+-- Dias de coleta por setor (PB08). Sem horário: a coleta não tem horário fixo (RN01/RN02).
+-- tipo: 'SELETIVA' ou 'COMUM'. dia_semana: 1 a 7, com 1 = segunda-feira.
+-- CREATE TABLE IF NOT EXISTS: regra D-13 (emulador com banco antigo não pode travar).
+
+CREATE TABLE IF NOT EXISTS coleta_dia (
+    setor_id INTEGER NOT NULL,
+    tipo TEXT NOT NULL,
+    dia_semana INTEGER NOT NULL,
+    PRIMARY KEY (setor_id, tipo, dia_semana)
+);
+
+listarColetasDoSetor:
+SELECT tipo, dia_semana FROM coleta_dia WHERE setor_id = ? ORDER BY tipo, dia_semana;
+
+inserirColeta:
+INSERT OR REPLACE INTO coleta_dia (setor_id, tipo, dia_semana) VALUES (?, ?, ?);
+
+contarColetas:
+SELECT COUNT(*) FROM coleta_dia;

@@ -32,7 +32,7 @@ fun AppNavegacao(navegador: Navegador) {
 
             // ===== INTEGRANTE 2 (PB08): Calendário =====
             Rota.Calendario -> {
-                TelaEmConstrucao("Calendário", navegador)
+                br.edu.univali.coletaseletiva.funcionalidades.calendario.CalendarioRota(navegador)
             }
 
 
