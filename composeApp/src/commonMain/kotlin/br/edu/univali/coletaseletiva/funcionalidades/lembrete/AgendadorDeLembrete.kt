@@ -1,14 +1,21 @@
 package br.edu.univali.coletaseletiva.funcionalidades.lembrete
 
-// ======================================================================
-// ARQUIVO-ESQUELETO · Integrante 2 · Cartão PB12 · arquivo 3 de 8
-// Contrato do agendador de notificações.
-//
-// PASSO A PASSO (troque [ ] por [x] quando terminar; no fim, apague este bloco
-// e deixe só comentários úteis):
-//   [ ] 1. Interface `AgendadorDeLembrete` com `agendar(quando: LocalDateTime)` e
-//          `cancelar()`. Só a interface (cada plataforma implementa depois).
-//
-// Requisitos: RF02, CU05  ·  Receitas: docs/RECEITAS.md  ·  Bíblia:
-//        docs/guias/integrante-2.md
-// ======================================================================
+import kotlinx.datetime.LocalDateTime
+
+/**
+ * Contrato de quem agenda a notificação de verdade. O lembrete é local, sem servidor (RF02).
+ * Cada plataforma implementa o seu (AgendadorAndroid; no iOS fica como evolução).
+ */
+interface AgendadorDeLembrete {
+    /** Pede uma notificação para essa data e hora (horário local do aparelho), trocando a anterior. */
+    fun agendar(quando: LocalDateTime)
+
+    /** Cancela a notificação agendada, se houver. */
+    fun cancelar()
+}
+
+/** Agendador que não faz nada: usado onde ainda não há notificação (iOS) e como padrão do AppContainer. */
+object AgendadorNulo : AgendadorDeLembrete {
+    override fun agendar(quando: LocalDateTime) = Unit
+    override fun cancelar() = Unit
+}
