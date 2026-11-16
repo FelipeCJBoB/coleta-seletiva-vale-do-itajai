@@ -62,13 +62,13 @@ fun AppNavegacao(navegador: Navegador) {
 
             // ===== INTEGRANTE 5 (PB16): Meus pontos =====
             Rota.MeusPontos -> {
-                TelaEmConstrucao("Meus pontos", navegador)
+                br.edu.univali.coletaseletiva.funcionalidades.pontuacao.MeusPontosRota(navegador)
             }
 
 
             // ===== INTEGRANTE 5 (PB16): Registrar descarte =====
             Rota.RegistrarDescarte -> {
-                TelaEmConstrucao("Registrar descarte", navegador)
+                br.edu.univali.coletaseletiva.funcionalidades.pontuacao.RegistrarDescarteRota(navegador)
             }
 
 
