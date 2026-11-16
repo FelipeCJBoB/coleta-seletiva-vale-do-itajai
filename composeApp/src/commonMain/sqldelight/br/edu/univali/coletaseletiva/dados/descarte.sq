@@ -10,3 +10,15 @@ CREATE TABLE IF NOT EXISTS descarte (
 
 contarDescartes:
 SELECT COUNT(*) FROM descarte;
+
+inserirDescarte:
+INSERT INTO descarte (material, pontos, data) VALUES (?, ?, ?);
+
+listarDescartesRecentesPrimeiro:
+SELECT id, material, pontos, data FROM descarte ORDER BY data DESC, id DESC;
+
+contarDescartesNaData:
+SELECT COUNT(*) FROM descarte WHERE data = ?;
+
+somarPontos:
+SELECT COALESCE(SUM(pontos), 0) FROM descarte;
