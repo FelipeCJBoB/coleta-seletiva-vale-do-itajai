@@ -1,16 +1,53 @@
 package br.edu.univali.coletaseletiva.funcionalidades.calendario
 
-// ======================================================================
-// ARQUIVO-ESQUELETO · Integrante 2 · Cartão PB08 · arquivo 14 de 16
-// Teste de integração (caso 9).
-//
-// PASSO A PASSO (troque [ ] por [x] quando terminar; no fim, apague este bloco
-// e deixe só comentários úteis):
-//   [ ] 1. Insira dias para o setor 5 e confira que a leitura devolve os mesmos dias.
-//
-// TESTES A ESCREVER (um @Test por linha; escreva ANTES do código = TDD):
-//   [ ] devolve_exatamente_os_dias_cadastrados_do_setor
-//
-// Requisitos: RF03, RN01, RN02, RN03, CU02  ·  Receitas: docs/RECEITAS.md  ·  Bíblia:
-//        docs/guias/integrante-2.md
-// ======================================================================
+import br.edu.univali.coletaseletiva.dados.bancoEmMemoria
+import br.edu.univali.coletaseletiva.funcionalidades.local.DadosLocalDemo
+import kotlinx.coroutines.test.runTest
+import kotlinx.datetime.DayOfWeek
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
+
+// PB08 · critério 9: o que está no banco volta exatamente igual (sem horário).
+class CalendarioRepositorioSqlTest {
+
+    @Test
+    fun devolve_exatamente_os_dias_cadastrados_do_setor() = runTest {
+        val banco = bancoEmMemoria()
+        banco.calendarioQueries.inserirColeta(5, "SELETIVA", 1) // segunda
+        banco.calendarioQueries.inserirColeta(5, "COMUM", 2) // terça
+        banco.calendarioQueries.inserirColeta(5, "COMUM", 5) // sexta
+        banco.calendarioQueries.inserirColeta(4, "SELETIVA", 3) // outro setor, não pode aparecer
+
+        val coletas = CalendarioRepositorioSql(banco).coletasDoSetor(5)
+
+        assertEquals(
+            listOf(
+                ColetaDoSetor(TipoColeta.SELETIVA, setOf(DayOfWeek.MONDAY)),
+                ColetaDoSetor(TipoColeta.COMUM, setOf(DayOfWeek.TUESDAY, DayOfWeek.FRIDAY)),
+            ),
+            coletas.sortedBy { it.tipo.ordinal },
+        )
+    }
+
+    @Test
+    fun semear_cadastra_os_dois_tipos_de_todos_os_setores_so_uma_vez() = runTest {
+        val repo = CalendarioRepositorioSql(bancoEmMemoria())
+
+        repo.semearSeVazio()
+        repo.semearSeVazio() // chamar de novo não duplica nem quebra
+
+        for (setor in DadosLocalDemo.setores) {
+            val coletas = repo.coletasDoSetor(setor.id)
+            assertEquals(
+                setOf(TipoColeta.SELETIVA, TipoColeta.COMUM),
+                coletas.map { it.tipo }.toSet(),
+                "O setor ${setor.nome} (${setor.id}) precisa de coleta seletiva e comum.",
+            )
+            // Entre segunda e sexta, como combinado para os dados de demonstração.
+            coletas.flatMap { it.diasDaSemana }.forEach {
+                assertTrue(it != DayOfWeek.SATURDAY && it != DayOfWeek.SUNDAY, "Dia de coleta fora de segunda a sexta.")
+            }
+        }
+    }
+}
