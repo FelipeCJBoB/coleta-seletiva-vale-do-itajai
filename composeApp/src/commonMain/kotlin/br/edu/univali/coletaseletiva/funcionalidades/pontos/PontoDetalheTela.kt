@@ -28,6 +28,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import br.edu.univali.coletaseletiva.di.LocalContainer
 import br.edu.univali.coletaseletiva.navegacao.Navegador
+import br.edu.univali.coletaseletiva.ui.BarraDeTopo
+import br.edu.univali.coletaseletiva.ui.Selo
+import br.edu.univali.coletaseletiva.ui.iconeDoMaterial
 
 @Composable
 fun PontoDetalheRota(pontoId: Long, navegador: Navegador) {
@@ -53,28 +56,14 @@ fun PontoDetalheTela(
     onAbrirRota: (String) -> Unit,
     onVoltar: () -> Unit,
 ) {
+    Column(Modifier.fillMaxSize()) {
+    BarraDeTopo("Detalhes do ponto", onVoltar)
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
             .verticalScroll(rememberScrollState()),
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Text(
-                text = "Detalhes do ponto",
-                style = MaterialTheme.typography.headlineMedium,
-            )
-            TextButton(onClick = onVoltar) {
-                Text("Voltar")
-            }
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
         if (estado.carregando) {
             Column(
                 modifier = Modifier.fillMaxWidth().height(200.dp),
@@ -108,8 +97,12 @@ fun PontoDetalheTela(
 
         Card(
             modifier = Modifier.fillMaxWidth(),
+            colors = CardDefaults.cardColors(containerColor = androidx.compose.ui.graphics.Color.White),
+            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
+                Selo(emoji = "📍", tamanho = 52.dp)
+                Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = ponto.nome,
                     style = MaterialTheme.typography.titleLarge,
@@ -167,11 +160,17 @@ fun PontoDetalheTela(
             } else {
                 "• ${aceito.material.nomeExibicao}"
             }
-            Text(
-                text = texto,
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(vertical = 2.dp),
-            )
+            Row(
+                modifier = Modifier.padding(vertical = 3.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                Selo(emoji = iconeDoMaterial(aceito.material), tamanho = 32.dp)
+                Text(
+                    text = texto,
+                    style = MaterialTheme.typography.bodyLarge,
+                )
+            }
         }
 
         val aceitaEspeciais = ponto.materiais.any {
@@ -182,14 +181,14 @@ fun PontoDetalheTela(
             Spacer(modifier = Modifier.height(16.dp))
             Card(
                 colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.errorContainer,
+                    containerColor = MaterialTheme.colorScheme.tertiaryContainer,
                 ),
                 modifier = Modifier.fillMaxWidth(),
             ) {
                 Text(
                     text = "Pilhas, baterias e óleo de cozinha: leve apenas a pontos de descarte, nunca na coleta comum.",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onErrorContainer,
+                    color = MaterialTheme.colorScheme.onTertiaryContainer,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(12.dp),
                 )
@@ -204,5 +203,6 @@ fun PontoDetalheTela(
         ) {
             Text("Abrir rota")
         }
+    }
     }
 }
