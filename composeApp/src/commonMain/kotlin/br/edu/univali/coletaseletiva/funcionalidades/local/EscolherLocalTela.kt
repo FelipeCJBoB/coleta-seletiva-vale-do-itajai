@@ -25,6 +25,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import br.edu.univali.coletaseletiva.di.LocalContainer
 import br.edu.univali.coletaseletiva.navegacao.Navegador
 import br.edu.univali.coletaseletiva.navegacao.Rota
+import br.edu.univali.coletaseletiva.ui.BarraDeTopo
 
 /** Liga a tela ao ViewModel e à navegação. Ao confirmar, volta para o Início. */
 @Composable
@@ -53,8 +54,9 @@ fun EscolherLocalTela(
     onConfirmar: () -> Unit,
     onVoltar: () -> Unit,
 ) {
+    Column(Modifier.fillMaxSize()) {
+    BarraDeTopo("Escolha seu local", onVoltar)
     Column(Modifier.fillMaxSize().padding(16.dp)) {
-        Text("Escolha seu local", style = MaterialTheme.typography.headlineMedium)
         Text(
             "Sua escolha fica só no aparelho.",
             style = MaterialTheme.typography.bodyMedium,
@@ -98,6 +100,7 @@ fun EscolherLocalTela(
             TextButton(onClick = onVoltar) { Text("Voltar") }
             Button(onClick = onConfirmar, enabled = estado.setorSelecionado != null) { Text("Confirmar") }
         }
+    }
     }
 }
 

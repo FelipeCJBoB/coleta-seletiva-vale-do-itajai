@@ -29,6 +29,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import br.edu.univali.coletaseletiva.di.LocalContainer
 import br.edu.univali.coletaseletiva.navegacao.Navegador
+import br.edu.univali.coletaseletiva.ui.BarraDeTopo
+import br.edu.univali.coletaseletiva.ui.Selo
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
 
@@ -69,17 +71,9 @@ fun LembreteTela(
 ) {
     var horario by remember(estado.horario) { mutableStateOf(estado.horario) }
 
+    Column(Modifier.fillMaxSize()) {
+    BarraDeTopo("Lembrete da coleta", onVoltar)
     Column(Modifier.fillMaxSize().padding(16.dp).verticalScroll(rememberScrollState())) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Text("Lembrete da coleta", style = MaterialTheme.typography.headlineMedium)
-            TextButton(onClick = onVoltar) { Text("Voltar") }
-        }
-        Spacer(Modifier.height(16.dp))
-
         Text(
             "Receba um aviso na véspera da próxima coleta do seu setor, no horário que você escolher.",
             style = MaterialTheme.typography.bodyLarge,
@@ -97,7 +91,10 @@ fun LembreteTela(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text("Lembrar na véspera", style = MaterialTheme.typography.titleMedium)
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                Selo(emoji = "🔔", tamanho = 44.dp)
+                Text("Lembrar na véspera", style = MaterialTheme.typography.titleMedium)
+            }
             Switch(checked = estado.ativo, onCheckedChange = null)
         }
         Spacer(Modifier.height(16.dp))
@@ -129,6 +126,7 @@ fun LembreteTela(
             "O lembrete é local: funciona sem internet e só avisa uma vez por vez ligado. Ligue de novo depois da coleta para receber o próximo.",
             style = MaterialTheme.typography.bodyMedium,
         )
+    }
     }
 }
 

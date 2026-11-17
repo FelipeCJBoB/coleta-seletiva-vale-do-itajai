@@ -13,21 +13,26 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import br.edu.univali.coletaseletiva.di.LocalContainer
 import br.edu.univali.coletaseletiva.navegacao.Navegador
 import br.edu.univali.coletaseletiva.navegacao.Rota
+import br.edu.univali.coletaseletiva.ui.BarraDeTopo
+import br.edu.univali.coletaseletiva.ui.EstadoVazio
+import br.edu.univali.coletaseletiva.ui.Selo
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
 
@@ -53,25 +58,16 @@ fun CalendarioTela(
     onVoltar: () -> Unit,
     onEscolherLocal: () -> Unit,
 ) {
-    Column(Modifier.fillMaxSize().padding(16.dp)) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Text("Calendário", style = MaterialTheme.typography.headlineMedium)
-            TextButton(onClick = onVoltar) { Text("Voltar") }
-        }
-        Spacer(Modifier.height(16.dp))
+    Column(Modifier.fillMaxSize()) {
+        BarraDeTopo("Calendário", onVoltar)
 
         when {
             estado.carregando -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator()
             }
 
-            estado.semLocal -> {
-                Text("Escolha seu local", style = MaterialTheme.typography.titleLarge)
-                Spacer(Modifier.height(8.dp))
+            estado.semLocal -> Column(Modifier.fillMaxSize().padding(16.dp)) {
+                EstadoVazio("📍", "Escolha seu local")
                 Text(
                     "Para ver os dias de coleta, escolha primeiro o seu município e setor.",
                     style = MaterialTheme.typography.bodyLarge,
@@ -82,40 +78,61 @@ fun CalendarioTela(
                 }
             }
 
-            else -> Column(Modifier.verticalScroll(rememberScrollState())) {
-                Text(estado.local, style = MaterialTheme.typography.titleMedium)
-                Spacer(Modifier.height(12.dp))
-                estado.itens.forEach { item ->
-                    Card(Modifier.fillMaxWidth()) {
-                        Column(Modifier.padding(16.dp)) {
-                            Text(
-                                text = item.tipo.nomeExibicao,
-                                style = MaterialTheme.typography.titleLarge,
-                                fontWeight = FontWeight.Bold,
-                            )
-                            Spacer(Modifier.height(4.dp))
-                            Text(
-                                text = item.diasDaSemana.joinToString(", ") { nomeDoDia(it) },
-                                style = MaterialTheme.typography.bodyLarge,
-                            )
-                            Spacer(Modifier.height(8.dp))
-                            Text(
-                                text = "Próxima coleta: ${formatarData(item.proximaData)}",
-                                style = MaterialTheme.typography.titleMedium,
-                                color = MaterialTheme.colorScheme.primary,
-                            )
-                        }
-                    }
-                    Spacer(Modifier.height(12.dp))
+            else -> Column(
+                Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                    Selo("📍", tamanho = 36.dp)
+                    Text(estado.local, style = MaterialTheme.typography.titleMedium)
                 }
+                estado.itens.forEach { item -> CartaoDeColeta(item) }
                 Text(
                     text = "Não há horário fixo de passagem do caminhão.",
                     style = MaterialTheme.typography.bodyMedium,
                 )
-                Spacer(Modifier.height(4.dp))
                 Text(
                     text = "Feriados nacionais: a coleta passa para o próximo dia útil.",
                     style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+        }
+    }
+}
+
+/** Um tipo de coleta: seletiva em verde, comum em cinza-esverdeado, com a próxima data em destaque. */
+@Composable
+private fun CartaoDeColeta(item: ItemCalendario) {
+    val seletiva = item.tipo == TipoColeta.SELETIVA
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = if (seletiva) MaterialTheme.colorScheme.primaryContainer
+            else MaterialTheme.colorScheme.secondaryContainer,
+        ),
+    ) {
+        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                Selo(if (seletiva) "♻️" else "🗑️", tamanho = 48.dp, fundo = Color.White.copy(alpha = 0.7f))
+                Column {
+                    Text(
+                        text = item.tipo.nomeExibicao,
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold,
+                    )
+                    Text(
+                        text = item.diasDaSemana.joinToString(", ") { nomeDoDia(it) },
+                        style = MaterialTheme.typography.bodyLarge,
+                    )
+                }
+            }
+            Surface(color = Color.White, shape = MaterialTheme.shapes.medium, modifier = Modifier.fillMaxWidth()) {
+                Text(
+                    text = "Próxima coleta: ${formatarData(item.proximaData)}",
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.padding(horizontal = 14.dp, vertical = 12.dp),
                 )
             }
         }

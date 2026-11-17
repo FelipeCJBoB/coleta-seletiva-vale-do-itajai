@@ -32,6 +32,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import br.edu.univali.coletaseletiva.di.LocalContainer
 import br.edu.univali.coletaseletiva.navegacao.Navegador
 import br.edu.univali.coletaseletiva.navegacao.Rota
+import br.edu.univali.coletaseletiva.ui.BarraDeTopo
+import br.edu.univali.coletaseletiva.ui.EstadoVazio
+import br.edu.univali.coletaseletiva.ui.Selo
+import br.edu.univali.coletaseletiva.ui.iconeDoMaterial
 
 @Composable
 fun PontosRota(navegador: Navegador) {
@@ -54,27 +58,13 @@ fun PontosTela(
     onAbrirPonto: (Long) -> Unit,
     onVoltar: () -> Unit,
 ) {
+    Column(Modifier.fillMaxSize()) {
+    BarraDeTopo("Pontos de descarte", onVoltar)
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Text(
-                text = "Pontos de descarte",
-                style = MaterialTheme.typography.headlineMedium,
-            )
-            TextButton(onClick = onVoltar) {
-                Text("Voltar")
-            }
-        }
-
-        Spacer(modifier = Modifier.height(8.dp))
-
         if (estado.carregando) {
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -121,6 +111,7 @@ fun PontosTela(
                     selected = estado.filtro == material,
                     onClick = { onFiltrar(material) },
                     label = { Text(material.nomeExibicao) },
+                    leadingIcon = { Text(iconeDoMaterial(material)) },
                 )
             }
         }
@@ -131,37 +122,40 @@ fun PontosTela(
         if (estado.avisoRN04) {
             Card(
                 colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.errorContainer,
+                    containerColor = MaterialTheme.colorScheme.tertiaryContainer,
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 12.dp),
             ) {
-                Text(
-                    text = "Pilhas, baterias e óleo de cozinha: leve apenas a pontos de descarte, nunca na coleta comum.",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onErrorContainer,
-                    fontWeight = FontWeight.Bold,
+                Row(
                     modifier = Modifier.padding(12.dp),
-                )
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                ) {
+                    Selo(emoji = "⚠️", tamanho = 36.dp, fundo = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.18f))
+                    Text(
+                        text = "Pilhas, baterias e óleo de cozinha: leve apenas a pontos de descarte, nunca na coleta comum.",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onTertiaryContainer,
+                        fontWeight = FontWeight.Bold,
+                    )
+                }
             }
         }
 
         if (estado.pontosFiltrados.isEmpty()) {
-            Text(
-                text = "Nenhum ponto de descarte encontrado para este filtro.",
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(top = 16.dp),
-            )
+            EstadoVazio("🔎", "Nenhum ponto de descarte encontrado para este filtro.")
         } else {
             LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp),
             ) {
                 items(estado.pontosFiltrados) { ponto ->
                     ItemPontoDeDescarte(ponto = ponto, onClick = { onAbrirPonto(ponto.id) })
                 }
             }
         }
+    }
     }
 }
 
@@ -174,8 +168,15 @@ private fun ItemPontoDeDescarte(
         modifier = Modifier
             .fillMaxWidth()
             .clickable(onClick = onClick),
+        colors = CardDefaults.cardColors(containerColor = androidx.compose.ui.graphics.Color.White),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
     ) {
-        Column(modifier = Modifier.padding(12.dp)) {
+      Row(
+        modifier = Modifier.padding(12.dp),
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+      ) {
+        Selo(emoji = "📍", tamanho = 44.dp)
+        Column {
             Text(
                 text = ponto.nome,
                 style = MaterialTheme.typography.titleMedium,
@@ -203,7 +204,9 @@ private fun ItemPontoDeDescarte(
                 text = "Aceita: $materiasTexto",
                 style = MaterialTheme.typography.bodySmall,
                 fontWeight = FontWeight.Medium,
+                color = MaterialTheme.colorScheme.primary,
             )
         }
+      }
     }
 }

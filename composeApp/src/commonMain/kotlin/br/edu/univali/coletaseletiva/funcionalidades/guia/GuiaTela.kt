@@ -19,12 +19,12 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -32,6 +32,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import br.edu.univali.coletaseletiva.di.LocalContainer
 import br.edu.univali.coletaseletiva.navegacao.Navegador
 import br.edu.univali.coletaseletiva.navegacao.Rota
+import br.edu.univali.coletaseletiva.ui.BarraDeTopo
+import br.edu.univali.coletaseletiva.ui.EstadoVazio
+import br.edu.univali.coletaseletiva.ui.Selo
 
 /** Tag do campo de busca, usada no teste de interface. */
 const val TAG_CAMPO_BUSCA = "guia_campo_busca"
@@ -59,38 +62,46 @@ fun GuiaTela(
     onAbrir: (Long) -> Unit,
     onVoltar: () -> Unit,
 ) {
-    Column(Modifier.fillMaxSize().padding(16.dp)) {
-        Cabecalho("Guia de separação", onVoltar)
+    Column(Modifier.fillMaxSize()) {
+        BarraDeTopo("Guia de separação", onVoltar)
 
-        OutlinedTextField(
-            value = estado.termo,
-            onValueChange = onDigitar,
-            label = { Text("Buscar no guia") },
-            placeholder = { Text("Ex.: caixa de leite") },
-            singleLine = true,
-            modifier = Modifier.fillMaxWidth().testTag(TAG_CAMPO_BUSCA),
-        )
-        Spacer(Modifier.height(12.dp))
-
-        when {
-            estado.carregando -> Carregando()
-            estado.nadaEncontrado -> Text(
-                text = "Nada encontrado",
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(top = 8.dp),
+        Column(Modifier.fillMaxSize().padding(16.dp)) {
+            OutlinedTextField(
+                value = estado.termo,
+                onValueChange = onDigitar,
+                label = { Text("Buscar no guia") },
+                placeholder = { Text("Ex.: caixa de leite") },
+                singleLine = true,
+                shape = MaterialTheme.shapes.medium,
+                modifier = Modifier.fillMaxWidth().testTag(TAG_CAMPO_BUSCA),
             )
-            else -> LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                items(estado.itens, key = { it.id }) { item ->
-                    Card(
-                        modifier = Modifier.fillMaxWidth().clickable { onAbrir(item.id) },
-                    ) {
-                        Column(Modifier.padding(12.dp)) {
-                            Text(item.nome, style = MaterialTheme.typography.titleMedium)
-                            Text(
-                                text = item.destino.nomeExibicao,
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.primary,
-                            )
+            Spacer(Modifier.height(12.dp))
+
+            when {
+                estado.carregando -> Carregando()
+                estado.nadaEncontrado -> EstadoVazio("🔎", "Nada encontrado")
+                else -> LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    items(estado.itens, key = { it.id }) { item ->
+                        Card(
+                            modifier = Modifier.fillMaxWidth().clickable { onAbrir(item.id) },
+                            colors = CardDefaults.cardColors(containerColor = Color.White),
+                            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+                        ) {
+                            Row(
+                                modifier = Modifier.padding(12.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                            ) {
+                                Selo(emoji = emojiDoDestino(item.destino), fundo = corDoDestino(item.destino))
+                                Column {
+                                    Text(item.nome, style = MaterialTheme.typography.titleMedium)
+                                    Text(
+                                        text = item.destino.nomeExibicao,
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        color = MaterialTheme.colorScheme.primary,
+                                    )
+                                }
+                            }
                         }
                     }
                 }
@@ -120,48 +131,57 @@ fun GuiaDetalheTela(
     onVerPontos: () -> Unit,
     onVoltar: () -> Unit,
 ) {
-    Column(Modifier.fillMaxSize().padding(16.dp)) {
-        Cabecalho("Guia de separação", onVoltar)
+    Column(Modifier.fillMaxSize()) {
+        BarraDeTopo("Guia de separação", onVoltar)
 
-        val item = estado.item
-        when {
-            estado.carregando -> Carregando()
-            item == null -> Text("Item não encontrado", style = MaterialTheme.typography.bodyLarge)
-            else -> {
-                Text(
-                    text = item.nome,
-                    style = MaterialTheme.typography.headlineSmall,
-                    fontWeight = FontWeight.Bold,
-                )
-                Spacer(Modifier.height(12.dp))
+        Column(Modifier.fillMaxSize().padding(16.dp)) {
+            val item = estado.item
+            when {
+                estado.carregando -> Carregando()
+                item == null -> EstadoVazio("🔎", "Item não encontrado")
+                else -> {
+                    Text(
+                        text = item.nome,
+                        style = MaterialTheme.typography.headlineSmall,
+                        fontWeight = FontWeight.Bold,
+                    )
+                    Spacer(Modifier.height(12.dp))
 
-                // Destino em destaque.
-                Card(
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
-                    Column(Modifier.padding(16.dp)) {
-                        Text(
-                            text = "Destino",
-                            style = MaterialTheme.typography.labelMedium,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer,
-                        )
-                        Text(
-                            text = item.destino.nomeExibicao,
-                            style = MaterialTheme.typography.titleLarge,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer,
-                        )
+                    // Destino em destaque, com a cor do tipo de destino.
+                    Card(
+                        colors = CardDefaults.cardColors(containerColor = corDoDestino(item.destino)),
+                        modifier = Modifier.fillMaxWidth(),
+                    ) {
+                        Row(
+                            modifier = Modifier.padding(16.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(14.dp),
+                        ) {
+                            Selo(emoji = emojiDoDestino(item.destino), tamanho = 52.dp, fundo = Color.White.copy(alpha = 0.7f))
+                            Column {
+                                Text(
+                                    text = "Destino",
+                                    style = MaterialTheme.typography.labelMedium,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                )
+                                Text(
+                                    text = item.destino.nomeExibicao,
+                                    style = MaterialTheme.typography.titleLarge,
+                                    fontWeight = FontWeight.Bold,
+                                    color = MaterialTheme.colorScheme.onSurface,
+                                )
+                            }
+                        }
                     }
-                }
-                Spacer(Modifier.height(16.dp))
+                    Spacer(Modifier.height(16.dp))
 
-                Text(item.orientacao, style = MaterialTheme.typography.bodyLarge)
+                    Text(item.orientacao, style = MaterialTheme.typography.bodyLarge)
 
-                if (item.destino == Destino.PONTO_DE_DESCARTE) {
-                    Spacer(Modifier.height(24.dp))
-                    Button(onClick = onVerPontos, modifier = Modifier.fillMaxWidth()) {
-                        Text("Ver pontos de descarte")
+                    if (item.destino == Destino.PONTO_DE_DESCARTE) {
+                        Spacer(Modifier.height(24.dp))
+                        Button(onClick = onVerPontos, modifier = Modifier.fillMaxWidth()) {
+                            Text("Ver pontos de descarte")
+                        }
                     }
                 }
             }
@@ -171,17 +191,21 @@ fun GuiaDetalheTela(
 
 // ===================== Peças comuns =====================
 
+/** Emoji de cada destino (só decoração). */
+private fun emojiDoDestino(destino: Destino): String = when (destino) {
+    Destino.COLETA_SELETIVA -> "♻️"
+    Destino.COLETA_COMUM -> "🗑️"
+    Destino.PONTO_DE_DESCARTE -> "📍"
+    Destino.ORIENTACAO_GERAL -> "ℹ️"
+}
+
+/** Cor de fundo de cada destino: verde, cinza, âmbar e azul-acinzentado. */
 @Composable
-private fun Cabecalho(titulo: String, onVoltar: () -> Unit) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Text(titulo, style = MaterialTheme.typography.headlineMedium)
-        TextButton(onClick = onVoltar) { Text("Voltar") }
-    }
-    Spacer(Modifier.height(16.dp))
+private fun corDoDestino(destino: Destino): Color = when (destino) {
+    Destino.COLETA_SELETIVA -> MaterialTheme.colorScheme.primaryContainer
+    Destino.COLETA_COMUM -> MaterialTheme.colorScheme.surfaceVariant
+    Destino.PONTO_DE_DESCARTE -> MaterialTheme.colorScheme.tertiaryContainer
+    Destino.ORIENTACAO_GERAL -> Color(0xFFDDE8F2)
 }
 
 @Composable
